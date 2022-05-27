@@ -143,14 +143,14 @@ GT<img src="doc.assets/3.bmp" style="zoom:80%;" />bicubic<img src="doc.assets/3-
 
 raisr<img src="doc.assets/3_result.bmp" style="zoom:80%;" />lbp-raisr<img src="doc.assets/3-16536203681676.bmp" style="zoom:80%;" />
 
-| DataSet | Scale | Bicubic | RAISR | LBP-RAISR | LBP-RAISR(Quantized) |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| Set5(PSNR) | x4 | 26.84 | 27.05 | **27.61** | 27.50 |
-| Set5(SSIM) | x4 | 0.790 | 0.803 | **0.812** | 0.808 |
-| Set5(LPIPS) | x4 | 0.310 | 0.269 | **0.192** | 0.196 |
-| GameSet(PSNR) | x4 | 31.51 | 31.59 | **31.85** | 31.70 |
-| GameSet(SSIM) | x4 | 0.862 | 0.861 | **0.870** | 0.865 |
-| GameSet(LPIPS) | x4 | 0.265 | 0.263 | **0.210** | 0.216 |
+| DataSet | Scale | Bilinear | Bicubic | RAISR | LBP-RAISR | LBP-RAISR(Quantized) |
+|:---:|:---:|:---:| :---: | :---:|:---:|:---:|
+| Set5(PSNR) | x4 | 25.79 | 26.84 | 27.05 | **27.61** | 27.50 |
+| Set5(SSIM) | x4 | 0.765 | 0.790 | 0.803 | **0.812** | 0.808 |
+| Set5(LPIPS) | x4 | 0.335 | 0.310 | 0.269 | **0.192** | 0.196 |
+| GameSet(PSNR) | x4 | 30.83 | 31.51 | 31.59 | **31.85** | 31.70 |
+| GameSet(SSIM) | x4 | 0.847 | 0.862 | 0.861 | **0.870** | 0.865 |
+| GameSet(LPIPS) | x4 | 0.288 | 0.265 | 0.263 | **0.210** | 0.216 |
 
 其中 Set5 是单帧图像超分辨率任务中最常用的数据集，GameSet 是景嘉微在本次杯赛中提供的测试效果图片。
 
