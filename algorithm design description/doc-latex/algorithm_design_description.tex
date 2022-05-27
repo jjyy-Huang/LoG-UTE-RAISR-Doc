@@ -1,0 +1,192 @@
+\documentclass[12pt, a4paper, oneside]{ctexbook}
+\usepackage{amsmath, amsthm, amssymb, bm, graphicx, hyperref, mathrsfs}
+\usepackage{geometry}
+\usepackage{hyperref}[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue]
+
+%设置引用格式
+\hypersetup{
+	colorlinks=true,linkcolor=black,colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue
+}
+%在LateX中，参考文献的引用一般有两种方式，平 齐 时 用 命 令\cite{...}, 上 标 时用\textsuperscript{\cite{...}}
+
+\CTEXsetup[format={\Large\bfseries}]{section}	%section 居左(默认居中)
+\CTEXsetup[format={\huge\bfseries}]{chapter}	%chapter 居左(默认居中)
+
+
+
+%配置纸张边缘
+\geometry{left=2.54cm,right=2.54cm,top=3.18cm,bottom=3.18cm}
+
+
+\title{{\Huge{\textbf{算法设计说明文档}}}\normalsize{\\——第六届全国大学生集成电路创新创业大赛景嘉微杯初赛提交文档}}
+\author{队名：虹ヶ咲学园芯片设计同好会\\ 成员：黄金源\space邓立唯\space林明锋}
+\date{\today}
+\linespread{1.5}
+
+
+\begin{document}
+	%-----------------------封面------------------
+	\maketitle	
+	\pagenumbering{Roman}
+	\setcounter{page}{1}
+	%-----------------------前言------------------
+	\begin{center}
+		\Huge\textbf{前言}
+	\end{center}~\
+	
+	本文档仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛初赛提交文档供评委评分使用。
+	~\\
+	\begin{flushright}
+		\begin{tabular}{c}
+			虹ヶ咲学园芯片设计同好会\\
+			\today
+		\end{tabular}
+	\end{flushright}
+	%-----------------------目录------------------
+	\newpage
+	\pagenumbering{Roman}	%Roman or arabic
+	\setcounter{page}{1}
+	\tableofcontents
+	\newpage
+	\setcounter{page}{1}
+	\pagenumbering{arabic}
+	
+	%-----------------------正文----------------	
+	\chapter{概要}
+	\section{背景介绍}
+	单幅图像超分辨率重建是指将一副低分辨率图像通过特定算法处理获得高分辨率图像的的一种技术。图像超分辨率重建一直以来都是图像处理领域中一个重要的研究方向之一，在医学、遥感、图像识别、网络媒体传输、动画制作与合成等领域都有着重要的应用。目前以有很多优秀的算法应用于现实的产品上，但是有效保持图像纹理细节且使图像边缘区域不失真，同时兼顾处理速度一直是图像超分辨率重建技术的一个难题。\par 在 GPU 处理领域，为了减轻像素引擎的负载，通常使用渲染低分辨率后经由算法放大至期望图像大小的方法已经成为一个被广泛使用的性能优化手段。实现一种对帧存颜色缓冲区图像的超采样处理 IP ,用于硬件性能不足时将低分辨率图像放大至高分辨率,从而在尽可能贴合高分辨率渲染效果的同时提升帧率、降低功耗。
+	\section{赛题分析}
+	在本赛题中，由于举办方提供的图像样例仅包含像素信息，缺失了渲染相关的运动信息、位置信息、光线信息等，故可将本赛题视作 Single Image Super Resolution(SISR) 任务。同时因为比赛方限制使用基于神经网络设计的算法，我们队伍将基于传统算法结合机器学习的方法进行图像超分辨率核心算法设计。
+	
+	
+	\chapter{算法分析}
+	\section{下采样模型概括}
+	在 SISR 任务中，实际上是完成了一个对低分辨率输入图像 LR 进行高分辨率图像 HR 的预测过程。图像的线性退化模型可以表示为式\ref{down_sample1}：
+	\begin{equation}
+		z=D_sHx + n \label{down_sample1}
+	\end{equation}
+	其中，$z$ 为输入大小为 $M*N$ 的 LR 图像；$x$ 为大小是 $Ms*Ns$ 的待预测 HR 图像；$H$ 是线性模糊核；$D_s$ 为下采样算子，系数 $s$ 是下采样的倍数； $n$ 为额外的噪声。图像超分辨率的任务就是通过 $z$ 恢复出未知的 HR 图像 $x$。由于在退化模型照中，下采样操作会带来信息损失，同时随着下采样倍数 $s$ 增大，LR 所包含的 HR 信息丢失越多。在这过程中，HR 与 LR 的对应是多对一的关系，完成超分辨率任务则变成了求解一个欠定的逆问题，即求得结果可能产生多个输出。因此需要引入先验信息，通过约束获得唯一解。\par 在本次赛题中，由于给出的测试集为 GPU 渲染图片的4倍线性下采样图，公式1中的线性模糊核 $H$ 则可以消去，同时假设没有引入来自其他的噪声干扰，则公式中噪声 $n$ 也可消去。最终得出得出式\ref{down_sample2}
+	\begin{equation}
+		z=z=D_sx \label{down_sample2}
+	\end{equation}
+	
+	\section{双三次插值算法介绍}
+	在数值分析这个数学分支中，双三次插值(Bicubic)\textsuperscript{\cite{10}\cite{11}}是二维空间中最常用的插值算法，是三次插值的一个拓展。而在图像处理中，双三次插值算法更是首选。双三次插值需要参考下周围16个像素($4 \times 4$)进行上采样，结果图像会比最近邻插值和双线性插值更平滑，因插值造成的伪影也更少。
+		\begin{figure}[h]
+			\centering
+			\includegraphics[scale=0.4]{./pic/bicubic-introduction.png}
+			\caption{双三次插值算法简介}
+			\label{bicubic_introduction}
+		\end{figure}
+	\par
+	作为一个整体，双三次插值算法需要计算插值像素中心与原始像素中心之间的距离。然后通过具有距离的双三次插值函数计算相关系数，然后使用该系数与原始像素点相乘，最终与16个原始像素点的乘积之和就是新的插值像素点结果。可以简单的看作新插值点与原始像素点对应的曼哈顿距离加权，可以用式\ref{bicubic_1}和式\ref{bicubic_2}表示:
+	\begin{equation}
+	SP_{\vec{s}}=\sum_{\vec{o}\in{RSB}}f_B(\vert\vec{s}-\vec{o}\vert)\cdot OP_{\vec{o}}		
+	\label{bicubic_1}
+	\end{equation}	
+
+	\begin{equation}
+		f_B(|x|)=
+		\begin{cases}
+	(\alpha + 2)|x|^3-(\alpha+3)|x|^2+1\quad &,if\ |x| \leq1\\
+	\alpha|x|^3-5\alpha|x|^2+8\alpha|x|-4\alpha\quad&,if \ 1<|x|<2\\
+	0&,otherwise				
+	\label{bicubic_2}
+		\end{cases}
+	\end{equation}
+	\par
+	其中，$SP_{\vec{s}}$ 为插值后像素，$\vec{s}$ 是对应的索引向量。$RSB$ 为当前插值像素所在的插值块对应的原始像素的索引集合。$OP_{\vec{o}}$ 为原始像素，$\vec{o}$ 是对应的索引向量。$f_B$ 则是双三次插值的核心函数。\par 由于双三次插值算法在我们算法设计中为预处理部分，我们进行了针对于硬件设计的大量优化，具体请参考文档 APV21B-Bicubic Super-resolution IP 介绍，此处不展开介绍。
+
+	\section{RAISR介绍}
+	\subsection{概述}
+	Google 在 2016 年提出了 \textbf{RAISR}\textsuperscript{\cite{1}} 算法，一种基于样本学习的超分辨率算法。RAISR 主要的特点是快速、准确，在运行速度上比基于深度学习的方法有大幅提升，同时保持了具有竞争力的图像重建质量。其核心思想是通过简单的插值方式把 LR 图像转化成 Pre-HR 图像，然后根据 Pre-HR 图像局部的梯度信息来对图像块进行分类，对于不同类别的图像块对应采用不同的与训练的滤波器进行卷积操作对图像纹理进行增强。在足够的训练数据下，通过学习一组滤波器建立成对的 LR patch与 HR 像素的映射关系。\par RAISR 将 patch 分为了216类并结合 $R^2$ 个像素类型 (R为上采样因子)，这其中包括了 3类像素强度、24类纹理角度、3类图像快相关性。因此，当上采样因子 $R$ 为4时，便需要 3456 个大小为 11 x 11 的滤波器。通过哈希映射的方式将 patch 分类到不同类别中，而不需要使用较为复杂的聚类方式如K-means\textsuperscript{\cite{2}}、或者是高斯混合模型\textsuperscript{\cite{3}}，从而降低分类查找时间。在 RAISR 中，哈希表键值是通过估计 patch 的局部梯度统计来获得。接下来我们会分析 RAISR 的一些具体实现。
+	\subsection{哈希表键计算方法}
+	通过特征分析\textsuperscript{\cite{6}}来计算用作哈希表键的图像块的局部梯度特征。第 $k$ 个的最近领域通常是一个 $\sqrt{n}*\sqrt{n}$ 的 patch，其中，像素包含于 $k_1,...,k_n$。每个图像块的局部梯度特征放置在一个 $n \times 2$ 的矩阵\ref{matrix_1}中：
+	\begin{equation}
+	G_k=
+	\left[
+	\begin{matrix}
+		{g_{x_{k_1}}} & {g_{y_{k_1}}}\\
+		\vdots & \vdots\\
+		{g_{x_{k_n}}} & {g_{y_{k_n}}}
+	\end{matrix}
+	\right]\label{matrix_1}
+	\end{equation}
+	\par 在特征分析\textsuperscript{\cite{6}}中，局部梯度特征可以通过奇异值分解SVD进行计算。求解出来的右向量表示为该图像块的梯度方向，两个奇异值用于表示梯度的强度和相关性。通过一个可分离的归一化高斯核构建了一个对角矩阵 $W_k$ ，用于简化特征值分解。根据 $G_k^TW_kG_k$ 矩阵的特征分解得到较大的特征值 $\lambda_1^k$ 、较小的特征值 $\lambda_2^k$ 和两个特征向量 $\phi_1^k$ 和 $\phi_2^k$，用来表示梯度的强度 $\lambda_k$、角度 $\theta_k$ 和相关系数 $\mu_k$，其中
+	\begin{equation}
+		\lambda_k=\lambda_1^k
+	\end{equation}
+	\begin{equation}
+		\theta_k=\arctan(\frac{\phi_{1,y}^k}{\phi_{1,x}^k}) 
+	\end{equation}
+	\begin{equation}
+		\mu_k=\frac{\sqrt{\lambda_1^k}-\sqrt{\lambda_2^k}}{\sqrt{\lambda_1^k}+\sqrt{\lambda_2^k}} 
+	\end{equation}
+	这三个哈希表键量化后可以用 $\lambda$，$\theta$， $\mu$ 来表示，其中
+	\begin{equation}
+		\lambda=\lceil\frac{\lambda_k}{Q_s}\rceil		\label{hash_7}
+	\end{equation}
+	\begin{equation}
+		\theta=\lceil\frac{\theta_k}{Q_\theta}\rceil	\label{hash_8}
+	\end{equation}
+	\begin{equation}
+		\mu=\lceil\frac{\mu_k}{Q_\mu}\rceil				\label{hash_9}
+	\end{equation}
+	在以上式 \ref{hash_7} 、式 \ref{hash_8} 和式 \ref{hash_9} 中，$Q_s$、$Q_\theta$、$Q_\mu$ 分别代表了强度、角度和相关系数的量化因子。通过这三种参数，构建了216个哈希键映射分类。
+	
+	\subsection{滤波器学习}
+	在 RAISR 的学习阶段，需要通过建立一个 LR 图像块与 HR 像素点映射的训练数据集，用于学习一个 $d\times d$ 的滤波器 $h$。滤波器可以通用求解最小二乘法最小值来计算：
+	\begin{equation}
+h=\min_h\sum_{i=1}^L\lVert{A_ih-b_i}\rVert_2^2 \label{filter_10}
+	\end{equation} 
+	其中，$h$ 是一个 $d^2 \times 1$ 向量表示学习的滤波器，$A_i$ 是由 Pre-SR 图像 $y_i$ 中提取图像块 $d\times d$ 后组成的大小为 $MN\times d^2$ 矩阵，$b_i$ 是由 HR 图像 $x_i$ 中提取的像素点所构成，对应 $y_i$ 图像块的中心坐标。
+	在论文\textsuperscript{\cite{1}}，作者为了降低求解滤波器的运算量和数据存储，拓展了式\ref{filter_10}：
+	\begin{equation}
+h=\min_h\lVert Qh-V\rVert_2^2		\label{filter_11}
+	\end{equation}
+	其中 $Q=A^TA$，$V=A^Tb$。经过这样的转换可以降低数据存储空间以及求解时候的运算，可以表示为:
+	\begin{equation}
+Q=A^TA=\sum_{i=1}^LA_i^TA_i
+	\end{equation}
+	\begin{equation}
+V=A^Tb=\sum_{i=1}^LA_i^Tb_i
+	\end{equation}
+其中，$Q$ 是一个 $d^2 \times d^2$ 的小矩阵和 $V$ 是一个 $d^2 \times 1$ 的列向量。到此滤波器的学习就此结束。
+
+	\subsection{CT变换}
+	由于在学习滤波器的时候会引入锐化操作，在使用该滤波器应用于简易插值后的图像，可能会引起结构变形。为了保留重要的结构，作者引入了 CT变换\textsuperscript{\cite{7}}，作用于简易插值后的图像与滤波后的图像。具体变换如图 \ref{CT_tran} 所示：
+		\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.36]{./pic/CT.png}
+		\caption{CT变换}
+		\label{CT_tran}
+		\end{figure}
+	通过一个 $3\times 3$ 的图像块的周围像素与中心像素构建出一个布尔比较。然后以汉明距离来计算每个像素的变化位数。用于结构的变化是取决于汉明距离的，因为可以根据变化的位数来确定权重用于加权插值图像与滤波图像，从而得到输出图像。至此，RAISR 的核心设计思路已经清晰。
+	
+
+	
+	
+%	%插入图片
+%	\begin{figure}[h]
+%		\centering
+%		\includegraphics[scale=0.5]{test.png}
+%	\end{figure}
+	
+	\newpage
+	%参考文献
+	\begin{thebibliography}{99}
+		\bibitem{1}Romano, Yaniv, John Isidoro, and Peyman Milanfar. "RAISR: rapid and accurate image super resolution." IEEE Transactions on Computational Imaging 3.1 (2016): 110-125.
+		\bibitem{2}Jeong, S. C.; Song, B. C. Training-based superresolution algorithm using k-means clustering and detail enhancement. In: Proceedings of the 18th European Signal Processing Conference, 1791–1795, 2010.
+		\bibitem{3} Yu, G. S.; Sapiro, G.; Mallat, S. Solving inverse problems with piecewise linear estimators: From Gaussian mixture models to structured sparsity. IEEE Transactions on Image Processing Vol. 21, No. 5, 2481–2499, 2012
+		\bibitem{4}R.G. Keys, “Cubic convolution interpolation for digital image processing,” IEEE Transaction on Acoustics, Speech and Signal processing, vol. 29, no. 6, Dec. 1981, pp. 1153-1160.
+		\bibitem{5}H.S. Hou and H.C. Andrews, “Cubic splines for image interpolation and digital filtering,” IEEE Transaction Signal processing, vol. 26, no. 6, Dec. 1978, pp. 1153-1160.
+		\bibitem{6}X. Feng and P. Milanfar, “Multiscale principal components analysis for image local orientation estimation,” Proceedings of the 36th Asilomar Conference on Signals, Systems and Computers, Pacific Grove, CA, November 2002. 5
+		\bibitem{7}Zabih, R.; Woodfill, J. Non-parametric local transforms for computing visual correspondence. In: Computer Vision — ECCV ’94. Lecture Notes in Computer Science, Vol. 801. Eklundh, J. O. Ed. Springer Berlin Heidelberg, 151–158, 1994.
+		\bibitem{8}T. Ojala, M. Pietikainen and T. Maenpaa, "Multiresolution gray-scale and rotation invariant texture classification with local binary patterns," in IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 24, no. 7, pp. 971-987, July 2002, doi: 10.1109/TPAMI.2002.1017623.
+		\bibitem{9}Z. Guo, L. Zhang and D. Zhang, "A Completed Modeling of Local Binary Pattern Operator for Texture Classification," in IEEE Transactions on Image Processing, vol. 19, no. 6, pp. 1657-1663, June 2010, doi: 10.1109/TIP.2010.2044957.
+		\bibitem{10} R. Keys, “Cubic convolution interpolation for digital image processing,” IEEE Trans. on Acoustics, Speech and Signal Proc., vol. 29, no. 6, pp. 1153–1160, 1981. 1
+		\bibitem{11}H. Hou and H. Andrews, “Cubic splines for image interpolation and digital filtering,” IEEE Trans. on Acoustics, Speech and Signal Proc., vol. 26, no. 6, pp. 508–517, 1978. 1		
+	\end{thebibliography}
+	
+	
+\end{document}
