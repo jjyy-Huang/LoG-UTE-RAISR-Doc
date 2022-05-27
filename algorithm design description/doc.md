@@ -43,6 +43,10 @@ $$
 
 由于双三次插值算法在我们算法设计中为预处理部分，我们进行了针对于硬件设计的大量优化，具体请参考文档 APV21B-Bicubic Super-resolution IP 介绍，此处不展开介绍。
 
+### 高斯-拉普拉斯算子介绍
+
+### 局部二值模式特征提取算法介绍
+
 
 ### RAISR介绍
 #### Overview
@@ -113,19 +117,45 @@ $$
 通过上节我们可以看到，RAISR 作者对于滤波器的学习以及应用进行了不少的优化，但是对于我们将该算法应用到硬件实现上，有着不小的挑战。第一个是在于，每个像素类型需要学习216个滤波器，而整幅图像可分为了16种类型，总共就需要3456个滤波器进行片上存储。在 FPGA 上存储如此大量的数据是不划算的。第二点是，为了能获得像素更多的信息，RAISR 采用了 $11\times11$ 大小的滤波器进行卷积，这对于硬件资源消耗量极大，在考虑量化同时保留运算过程中数据合适位宽并满足运算时延，至少需要180个DSP进行乘累加运算，总延时至少12个时钟周期输出延迟。第三点，哈希表键的运算不仅需要进行除法、开方及反正切运算，还需要进行奇异值分解，这对于 FPGA 实时性设计要求难度提升了一个等级。
 
 ### Overview
-我们提出了一个创新的 **LBP-RAISR** 算法，以 **RAISR** 为主体框架，整体上分为了三个阶段。第一步，通过双三次插值算法[[4-5]](#参考文献)，将 LR 图像映射到 HR 图像上，得到最终需要的分辨率；第二步，遍历 Pre-HR 图像的每一个图像块，计算使用LBP算法[[8-9]](#参考文献)进行纹理分类。显而易见，这里我们的设计与 **RAISR** 有较大的区别，这是由于硬件设计的考虑，会在下一节和 RTL设计 文档中详细解释。第三步，利用上一步的得到每个图像块的类型找到对应的滤波器，作用于图像块，得到更接近于原始 HR 的像素，最后得到更高质量的 SR 图像。整体框架如下图1所示。<img src="doc.assets/image-20220525154709653.png" alt="image-20220525154709653" style="zoom: 50%;" />
+我们提出了一个创新的 **LBP-RAISR** 算法，以 **RAISR** 为主体框架，整体上分为了三个阶段。第一步，通过双三次插值算法[[4-5]](#参考文献)，将 LR 图像映射到 HR 图像上，得到最终需要的分辨率；第二步，遍历 Pre-HR 图像的每一个图像块，进行高斯-拉普拉斯(LoG)纹理检测后使用CLBP算法[[8-9]](#参考文献)进行纹理分类。显而易见，这里我们的设计与 **RAISR** 有较大的区别，这是由于硬件设计的考虑，会在下一节和 RTL设计 文档中详细解释。第三步，利用上一步的得到每个图像块的类型找到对应的滤波器，作用于图像块，得到更接近于原始 HR 的像素，最后得到更高质量的 SR 图像。整体框架如下图1所示。
+
+<img src="doc.assets/image-20220525154709653.png" alt="image-20220525154709653" style="zoom: 50%;" />
 
 ### Step 1: Bicubic Interpolation
+作为第一步，我们需要将 LR 图像先上采样到需要的分辨率，可以使用传统的插值方法如最近邻插值、双线性插值、双三次差值、Lanczos插值等算法。由于考虑到上采样图片的质量效果会应影响到最终的高分辨率图片质量与运算过程中的复杂度，双三次插值成为了我们算法预处理的选择。
 
+### Step 2: Texture Classification
+我们对经过4倍上采样后的 Pre-SR 图片进行高斯-拉普拉斯滤波(LoG)[[12]](#参考文献)，然后确定一个阈值区间进行二值化操作，采用 CLBP 算法对二值化后的图像纹理进行按块分类。这里需要注意的是，我们采用 $5 \times 5$ 的图像块进行纹理分类，由于已经对图像块进行了纹理检测这一操作，所以 CLBP 算法步骤我们并没有严格执行，保留 $C$ 中心像素与 $u$ 统一编码这两个参数, 考虑到该算法需要对圆形区域检测需要进行三角函数进行运算，我们将其近似等效为最外边缘的二值像素，从而减轻运算量。但是 CLBP 算法经过统一编码后具有旋转不变形，与滤波器需要学习局部纹理方向角度特征相矛盾，故此我们增加了一步操作，当进行对像素统一编码时，保留了角度信息，用于增加选择滤波器参数条件。此时，纹理分类结束。
 
-### Step 2: Local Binary Pattern
-
-
-### Step 3: 
+### Step 3: Convlution
+在上一步中我们已经通过纹理分类得到了图像块的纹理类型，根据这个类型我们可以选择预学习的滤波器，对相应的 Pre-SR 图像块进行卷积操作，从而得到了 SR 像素，最终输出 SR 图像。
 
 ## 实验
+我们将提出的算法与 raisr 进行了对比
+
+GT<img src="doc.assets/1.bmp" style="zoom: 50%;" />bicubic<img src="doc.assets/1-16536201208683.bmp" style="zoom: 50%;" />
+
+raisr<img src="doc.assets/1_result.bmp" style="zoom: 50%;" />lbp-raisr<img src="doc.assets/1-16536199437721.bmp" style="zoom: 50%;" /> 
+
+
+
+GT<img src="doc.assets/3.bmp" style="zoom:80%;" />bicubic<img src="doc.assets/3-16536203177385.bmp" style="zoom:80%;" />
+
+raisr<img src="doc.assets/3_result.bmp" style="zoom:80%;" />lbp-raisr<img src="doc.assets/3-16536203681676.bmp" style="zoom:80%;" />
+
+| DataSet | Scale | Bicubic | RAISR | LBP-RAISR | LBP-RAISR(Quantized) |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| Set5(PSNR) | x4 | 26.84 | 27.05 | **27.61** | 27.50 |
+| Set5(SSIM) | x4 | 0.790 | 0.803 | **0.812** | 0.808 |
+| Set5(LPIPS) | x4 | 0.310 | 0.269 | **0.192** | 0.196 |
+| GameSet(PSNR) | x4 | 31.51 | 31.59 | **31.85** | 31.70 |
+| GameSet(SSIM) | x4 | 0.862 | 0.861 | **0.870** | 0.865 |
+| GameSet(LPIPS) | x4 | 0.265 | 0.263 | **0.210** | 0.216 |
+
+其中 Set5 是单帧图像超分辨率任务中最常用的数据集，GameSet 是景嘉微在本次杯赛中提供的测试效果图片。
 
 ## 总结
+基于 RASIR[[1]](#参考文献) 的整体思路，我们提出了改进的 LBP-RAISR 算法。LBP-RAISR 背后的核心思想与 RAISR 相同，都是学习从 LR 图像到 HR 版本的映射关系，增强简单插值图像质量。映射是通过使用一组过滤器过滤 LR 图像的简单插值放大版本来完成的，这些过滤器旨在最小化输入图像和真实图像之间的欧氏距离。更具体地说，LBP-RAISR 使用了一种更简便快捷的纹理分类方法，从存储空间上和运算量上做了大量的优化，同时也保留了图像质量的效果。根据实验结果，可以较好的提升 RAISR 的性能以及运算时间。同时经过量化后适配 硬件设计并有损失太大的图像质量。由于我们采用的是 LBP 进行纹理分类，与 RAISR 中的哈希映射方法相比较，进一步减少了运算量，同时选择滤波器的方法是固定的，对于硬件上实现是高效便捷的。从更广泛的角度来看，我们希望 LBP-RAISR 作为学习到的滤波器映射与训练集的关联影响并不大，在这种情况下，学习的过滤器可以用于为任意输入图像进行 x4 的超分辨率图像输出。同时由于运算量的大大降低，让高分辨率图像进行实时的超分辨率任务也是可能的。
 
 
 
@@ -142,3 +172,4 @@ detail enhancement. In: Proceedings of the 18th European Signal Processing Confe
 9. Z. Guo, L. Zhang and D. Zhang, "A Completed Modeling of Local Binary Pattern Operator for Texture Classification," in IEEE Transactions on Image Processing, vol. 19, no. 6, pp. 1657-1663, June 2010, doi: 10.1109/TIP.2010.2044957.
 10. R. Keys, “Cubic convolution interpolation for digital image processing,” IEEE Trans. on Acoustics, Speech and Signal Proc., vol. 29, no. 6, pp. 1153–1160, 1981. 1
 11. H. Hou and H. Andrews, “Cubic splines for image interpolation and digital filtering,” IEEE Trans. on Acoustics, Speech and Signal Proc., vol. 26, no. 6, pp. 508–517, 1978. 1
+12. R. Haralick and L. Shapiro Computer and Robot Vision, Vol. 1, Addison-Wesley Publishing Company, 1992, pp 346 - 351.
