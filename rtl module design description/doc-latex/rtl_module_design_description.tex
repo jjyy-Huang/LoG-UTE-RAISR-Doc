@@ -3,6 +3,9 @@
 \usepackage{geometry}
 \usepackage{subfigure}
 \usepackage{hyperref}[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue]
+\usepackage{pdfpages}
+\usepackage{svg}
+
 
 %设置引用格式
 \hypersetup{
@@ -73,23 +76,78 @@
 	
 	\chapter{纹理分类模块}
 	纹理分类 IP 可提供对于单通道图像每个 $5\times5$ 或 $3\times3$ 图像块的纹理特征进行实时分类。包含了一个归一化高斯卷积核、一个标准拉普拉斯算子、一个 LBP 分类器、三个行缓冲模块、一个滤波器参数存储单元和一个控制单元。为了确保卷积操作后仍需令图像保持原始尺寸，行缓冲模块包含了图像填充处理操作与数据映射模块，由控制单元进行管理。
-	%图片
+
+	\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.55]{./pic/texture}
+	\caption{纹理分类模块结构图}
+	\label{fig:texture}
+	\end{figure}
+
+
+
 	\section{运算位宽与量化}
 	为了节省片上资源的消耗，最大化提升 DSP 利用率，在本模块中，不同部分对于 DSP48E2 均有不同程度上的优化。其中，针对高斯滤波卷积中，将核内权重进行9位无符号量化，在保证高斯卷积核性能的同时充分利用了 DSP48E2 单元的乘法器。这种量化方法仅支持8位图像输入。另外，为了保证后续拉普拉斯滤波数据误差尽可能降低，我们将高斯滤波后的数据量化为20位，尽可能保留数据位宽，避免引入过大误差影响后续操作。在完成拉普拉斯算子卷积后生成的是1位图像输出至 LBP 分类器。
-	\section{高斯卷积核}
+	\subsection{高斯卷积核}
 	高斯卷积核包含了一个高斯系数寄存器单元、一组并行乘法器单元、一组并行的加法器单元、一组并行舍入单元。
-	%图片
+		\begin{figure}[h]
+			\centering
+			\includegraphics[scale=0.55]{pic/gaussian_filter}
+			\caption{高斯卷积核结构图}
+			\label{fig:gaussianfilter}
+		\end{figure}
 	每个像素进行高斯滤波卷积是以像素本身为中心，边缘 $5\times5$ 的像素块作为数据输入。每个像素块需要与对应的高斯系数进行相乘然后累和。该高斯卷积核 IP 每个时钟周期处理4个像素。
-	\section{高斯系数寄存器单元}
+	\subsection{高斯系数寄存器单元}
 	高斯滤波卷积核系数是由 $\delta$ 所决定，在运行过程中， $\delta$ 不会发生改变，所以该系数为常数。同时，$5\times5$ 卷积核系数与所在卷积核的位置有关系，并且成对应关系。25个系数只需要存6个系数即可。
-	%图片
-	\section{并行乘法器单元}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.4]{pic/number}
+		\caption{高斯卷积核数据矩阵数据分布}
+		\label{fig:number}
+	\end{figure}
+	\subsection{并行乘法器单元}
 	并行乘法单元包含了7个 DSP48E2 用于实现 $5\times5$ 大小的卷积乘法操作。在两个时钟周期内可输出结果(一周期内也可实现结果输出，但为了提升 IP 最大时钟频率，输出端插入一级寄存器增大时序违例余量)\par 由于高斯系数具有对称性，当计算图像块对应的位置的时候，存在几对像素所相乘同一个高斯权重系数。例如上图(0,0)、(0,4)、(4,0)、(4,4)对应像素均是乘以同一个系数。因此，我们可以利用这一特性，并结合 DSP48E2 的大位宽乘法器，同时进行两个8位数据乘以一个9位权重，并保留完整位宽输出。具体设计分析可以查看[APV21B\_Bicubic\_Super\_Resolution\_IP\_UM] 第四部分Biubic设计详细解释中的乘加单元(MA Unit)介绍。%图片引用
-	%图片
+		\begin{figure}[h]
+			\centering
+			\includegraphics[scale=1]{pic/mul_unit}
+			\caption{DSP乘法器单元结构图}
+			\label{fig:mulunit}
+		\end{figure}
+	\subsection{累和单元}
+	并行累和单元包含了12个 DSP48E2 用于实现25个数的累和操作。在六个时钟周期后可输出结果。
+	$$
+	result = \sum_{i=0}^{24}A_i
+	$$
+	下图 \ref{DSP} 为一个 DSP48E2 内部架构图。
+		\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.87]{pic/DSP}
+		\caption{DSP内部结构图}
+		\label{DSP}
+		\end{figure}
+	\par 我们可以看到，在 DSP48E2 内部，有两个可以实现加法的环节，第一个 A 与 B 进行乘法之前，有一个相对较小位宽的加法器，另外一个是在 A 与 B 乘法之后一个较大位宽的加法器。我们可以利用这两个加法器实现在一个 DSP48E2 内完成三个数累和，两个时钟周期后输出。\par 于是，我们可以基于这一个3输入1输出加法器搭建一个具有三级的25输入1输出的加法器单元，结果将会在六个时钟周期后输出。\par 
+	%pic
+	\textbf{这里有一张图片\\t\\t\\t\\t\\}
+	其中需要注意的两个点，第一，我们充分利用了 DSP48E2 内的寄存器资源，以便提升该 IP 最大能达到的时钟频率；第二，我们尽可能的利用上了 DSP48E2 的位宽，保证数据运算时不会因为引入误差而影响后续运算。
+	
+	\subsection{舍入单元}
+	并行舍入单元是通过判断后截断位数的低一位是否为1进行简单的四舍五入运算，可以直接通过一个 DSP48E2 完成该操作。由于输入数据与权重数据均是经过量化的，定点位数进行四舍五入是简单的操作。舍入运算均会在两个时钟周期后输出结果。
+		
 	\section{拉普拉斯卷积核}
+	拉普拉斯卷积核包含了一组并行的累和单元、一组并行比较单元。\par
+	在拉普拉斯卷积核中，我们使用4个 DSP48E2 进行9数累和运算。每个像素进行拉普拉斯滤波是以像素本身为中心，边缘 $3\times3$ 的像素块作为数据输入。每个像素亏需要与对应的拉普拉斯系数进行相乘然后累和。该拉普拉斯卷积核 IP 每个时钟周期处理4个像素。\par
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.5]{pic/number_3}
+		\caption{拉普拉斯卷积核数据}
+		\label{fig:number3}
+	\end{figure}
+	由图 \ref{fig:number3} 可以看到，拉普拉斯算子中心为 -8，边缘为 1 的权重分布。所以我们直接利用累和完成 9 数累和。其中中心像素我们直接对像素值的低位补3个0操作，同时将它所传入的 DSP48E2 的加法器设置为减法操作即可。该拉普拉斯卷积核可在四个时钟周期后输出结果。\par
+	\textbf{这里有一张图片\\t\\t\\t\\t\\}
+	
 	\section{LBP分类器}
 	\section{行缓冲模块}
-	
+
 	
 	
 \end{document}
