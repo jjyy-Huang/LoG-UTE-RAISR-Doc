@@ -66,7 +66,7 @@
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics[scale=0.5]{pic/IP-overview}
+		\includegraphics[scale=0.65]{pic/Overview.pdf}
 		\caption{IP 概览}
 		\label{fig:ip-overview}
 	\end{figure}
@@ -126,8 +126,12 @@
 		\label{DSP}
 		\end{figure}
 	\par 我们可以看到，在 DSP48E2 内部，有两个可以实现加法的环节，第一个 A 与 B 进行乘法之前，有一个相对较小位宽的加法器，另外一个是在 A 与 B 乘法之后一个较大位宽的加法器。我们可以利用这两个加法器实现在一个 DSP48E2 内完成三个数累和，两个时钟周期后输出。\par 于是，我们可以基于这一个3输入1输出加法器搭建一个具有三级的25输入1输出的加法器单元，结果将会在六个时钟周期后输出。\par 
-	%pic
-	\textbf{这里有一张图片\\t\\t\\t\\t\\}
+		\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.52]{pic/sum}
+		\caption{累和模块}
+		\label{sum}
+		\end{figure}
 	其中需要注意的两个点，第一，我们充分利用了 DSP48E2 内的寄存器资源，以便提升该 IP 最大能达到的时钟频率；第二，我们尽可能的利用上了 DSP48E2 的位宽，保证数据运算时不会因为引入误差而影响后续运算。
 	
 	\subsection{舍入单元}
@@ -138,12 +142,18 @@
 	在拉普拉斯卷积核中，我们使用4个 DSP48E2 进行9数累和运算。每个像素进行拉普拉斯滤波是以像素本身为中心，边缘 $3\times3$ 的像素块作为数据输入。每个像素亏需要与对应的拉普拉斯系数进行相乘然后累和。该拉普拉斯卷积核 IP 每个时钟周期处理4个像素。\par
 	\begin{figure}[h]
 		\centering
-		\includegraphics[scale=0.5]{pic/number_3}
+		\includegraphics[scale=0.4]{pic/number_3}
 		\caption{拉普拉斯卷积核数据}
 		\label{fig:number3}
 	\end{figure}
 	由图 \ref{fig:number3} 可以看到，拉普拉斯算子中心为 -8，边缘为 1 的权重分布。所以我们直接利用累和完成 9 数累和。其中中心像素我们直接对像素值的低位补3个0操作，同时将它所传入的 DSP48E2 的加法器设置为减法操作即可。该拉普拉斯卷积核可在四个时钟周期后输出结果。\par
-	\textbf{这里有一张图片\\t\\t\\t\\t\\}
+	\begin{figure}[h]	
+	\centering
+	\includegraphics[scale=0.7]{pic/laplace.pdf}
+	\caption{拉普拉斯卷积}
+	\label{laplace}
+	\end{figure}	
+	需要注意的是，在高斯卷积与拉普拉斯卷积中均使用了 \textbf{3输入1输出} 累和模块，但此时拉普拉斯使用时需要将输入数据转换为有符号数再进行运算。当数据位宽拓展时，需要注意高符号位选择。
 	
 	\section{LBP分类器}
 	\section{行缓冲模块}
