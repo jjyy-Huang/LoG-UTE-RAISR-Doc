@@ -13,8 +13,6 @@
 \CTEXsetup[format={\Large\bfseries}]{section}	%section 居左(默认居中)
 \CTEXsetup[format={\huge\bfseries}]{chapter}	%chapter 居左(默认居中)
 
-
-
 %配置纸张边缘
 \geometry{left=2.54cm,right=2.54cm,top=3.18cm,bottom=3.18cm}
 
@@ -97,7 +95,42 @@
 	\end{equation}
 	\par
 	其中，$SP_{\vec{s}}$ 为插值后像素，$\vec{s}$ 是对应的索引向量。$RSB$ 为当前插值像素所在的插值块对应的原始像素的索引集合。$OP_{\vec{o}}$ 为原始像素，$\vec{o}$ 是对应的索引向量。$f_B$ 则是双三次插值的核心函数。\par 由于双三次插值算法在我们算法设计中为预处理部分，我们进行了针对于硬件设计的大量优化，具体请参考文档 APV21B-Bicubic Super-resolution IP 介绍，此处不展开介绍。
+	
+	\section{高斯-拉普拉斯算子介绍}
+	\subsection{简要概述}
+	拉普拉斯算子是图像二阶空间导数的二维各向同性测度。图像的拉普拉斯算子强调快速强度变化的区域，因此经常用于边缘检测。拉普拉斯算子通常应用于先用近似高斯平滑滤波器进行平滑的图像，以降低其对噪声的敏感性，因此这两种变体将在这里一起描述。该算子通常以单个灰度图像作为输入，生成另一个灰度图像作为输出。
+	\subsection{原理}
+	记图片像素的强度值为$I(x,y)$ ，其所对应的拉普拉斯算子$L(x,y)$如式 \ref{lap} 所示：
+	\begin{equation}	\label{lap}
+		L(x,y)=\frac{\partial ^2 y}{\partial x^2} + \frac{\partial ^2 y}{\partial y^2}
+	\end{equation}
+	这个过程可以采用卷积核进行计算。由于图片是采用离散的像素值集合进行表示的，因此我们可以寻找一个近似于拉普拉斯算子的二阶导数离散卷积核。比如如下所示的两个卷积核：
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{lllll}
+			\cline{1-3}
+			\multicolumn{1}{|l|}{0}  & \multicolumn{1}{l|}{-1} & \multicolumn{1}{l|}{0}  &  &  \\ \cline{1-3}
+			\multicolumn{1}{|l|}{-1} & \multicolumn{1}{l|}{4}  & \multicolumn{1}{l|}{-1} &  &  \\ \cline{1-3}
+			\multicolumn{1}{|l|}{0}  & \multicolumn{1}{l|}{-1} & \multicolumn{1}{l|}{0}  &  &  \\ \cline{1-3}
+			&                         &                         &  & 
+		\end{tabular}
+	\end{table}
 
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{lllll}
+			\cline{1-3}
+			\multicolumn{1}{|l|}{-1} & \multicolumn{1}{l|}{-1} & \multicolumn{1}{l|}{-1} &  &  \\ \cline{1-3}
+			\multicolumn{1}{|l|}{-1} & \multicolumn{1}{l|}{8}  & \multicolumn{1}{l|}{-1} &  &  \\ \cline{1-3}
+			\multicolumn{1}{|l|}{-1} & \multicolumn{1}{l|}{-1} & \multicolumn{1}{l|}{-1} &  &  \\ \cline{1-3}
+			&                         &                         &  & 
+		\end{tabular}
+	\end{table}
+	以上的两个卷积核均可以近似为拉普拉斯算子。因为这两个卷积核都是对图片二阶导数的近似估计，它们对于图片中的噪声均很敏感。因此，为了解决这一问题，我们一般会在进行拉普拉斯操作之前先对图像进行高斯平滑滤波处理，二维的高斯平滑卷积核可以用式 \ref{gauss} 进行表示。
+	\begin{equation}	\label{gauss}
+		G_\sigma (x,y)=\frac{1}{2\pi \sigma ^2} exp(-\frac{x^2+y^2}{2\sigma ^2}) 
+	\end{equation}
+	先利用高斯平滑滤波进行处理，可以降低图片中的高频噪声，方便后续的拉普拉斯操作。事实上由于卷积操作具有结合律，因此我们先将高斯平滑滤波器与拉普拉斯滤波器进行卷积，然后利用得到的混合滤波器去对图片进行卷积以得到所需的结果。
 	\section{RAISR介绍}
 	\subsection{概述}
 	Google 在 2016 年提出了 \textbf{RAISR}\textsuperscript{\cite{1}} 算法，一种基于样本学习的超分辨率算法。RAISR 主要的特点是快速、准确，在运行速度上比基于深度学习的方法有大幅提升，同时保持了具有竞争力的图像重建质量。其核心思想是通过简单的插值方式把 LR 图像转化成 Pre-HR 图像，然后根据 Pre-HR 图像局部的梯度信息来对图像块进行分类，对于不同类别的图像块对应采用不同的与训练的滤波器进行卷积操作对图像纹理进行增强。在足够的训练数据下，通过学习一组滤波器建立成对的 LR patch与 HR 像素的映射关系。\par RAISR 将 patch 分为了216类并结合 $R^2$ 个像素类型 (R为上采样因子)，这其中包括了 3类像素强度、24类纹理角度、3类图像快相关性。因此，当上采样因子 $R$ 为4时，便需要 3456 个大小为 11 x 11 的滤波器。通过哈希映射的方式将 patch 分类到不同类别中，而不需要使用较为复杂的聚类方式如K-means\textsuperscript{\cite{2}}、或者是高斯混合模型\textsuperscript{\cite{3}}，从而降低分类查找时间。在 RAISR 中，哈希表键值是通过估计 patch 的局部梯度统计来获得。接下来我们会分析 RAISR 的一些具体实现。
