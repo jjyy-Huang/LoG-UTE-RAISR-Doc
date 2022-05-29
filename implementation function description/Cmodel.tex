@@ -1,7 +1,14 @@
 \documentclass[12pt, a4paper, oneside]{ctexbook}
-\usepackage{amsmath, amsthm, amssymb, bm, graphicx, hyperref, mathrsfs}
+\usepackage{amsmath, amsthm, amssymb, bm, graphicx, mathrsfs}
 \usepackage{geometry}
 \usepackage{listings,xcolor}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+
+%设置引用格式
+\hypersetup{
+	colorlinks=true,linkcolor=black,colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue
+}
 
 %代码配置
 \lstset{
@@ -32,6 +39,7 @@
 
 \begin{document}
 %-----------------------封面------------------
+	\includepdf{./pic/cover.pdf}
 	\maketitle	
 	\pagenumbering{Roman}
 	\setcounter{page}{1}
@@ -40,7 +48,7 @@
 		\Huge\textbf{前言}
 	\end{center}~\
 
-本文档仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛初赛提交文档供评委评分使用。
+本文档（ 函数现函数说明文档）仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛初赛提交文档供评委评分使用。
 	~\\
 	\begin{flushright}
 		\begin{tabular}{c}
@@ -183,8 +191,12 @@ void upsampling_pthread_x16(ImageMat* src, ImageMat** dst, qint16_t** weight);
 		\begin{lstlisting}[numbers=none]
 void freeqWeightSpace(qint16_t ** weight, int32_t type);
 		\end{lstlisting}
+	\textbf{参数:} \par weight : qint\_16 类型的指针 \par type: int32\_t 类型的变量 \\
+	\textbf{返回值：}\par 无返回值 \\
+	\textbf{作用：}\par 用于释放申请的内容空间\\
+	
+	
 		\subsection{图片读取与格式转换}
-
 		\begin{enumerate}
 			\item \textbf{ReadBitmap}——读取bmp格式图片
 				\begin{lstlisting}[numbers=none]
@@ -239,9 +251,9 @@ void mergeYChannel2Image(ImageMat* img, ImageMat* im_y);
 				\begin{lstlisting}[numbers=none]
 void DestoryImageMat(ImageMat* mat);
 				\end{lstlisting}
-				\textbf{参数:} \par mat: ImageMat类型的结构体指针，用于存储图像的长度、宽度和数据信息\par 
+				\textbf{参数:} \par mat: ImageMat 类型的结构体指针，用于存储图像的长度、宽度和数据信息\par 
 				\textbf{返回值：}\par 无返回值 \\
-				\textbf{作用：}\par 内部调用free 释放申请的图像内存 \\			
+				\textbf{作用：}\par 内部调用 free 释放申请的图像内存 \\			
 							
 			
 		\end{enumerate}
@@ -250,22 +262,9 @@ void DestoryImageMat(ImageMat* mat);
 		
 
 		\chapter{最终效果}
-	
+		
 
-	
-	
-	%插入图片
-	\begin{figure}[h]
-		\centering
-		\includegraphics[scale=0.5]{test.png}
-	\end{figure}
 
-	\newpage	
-	%参考文献
-	\begin{thebibliography}{99}
-		\bibitem{a}作者. \emph{文献}[M]. 地点:出版社,年份.
-		\bibitem{b}作者. \emph{文献}[M]. 地点:出版社,年份.
-	\end{thebibliography}
 	
 	
 \end{document}
