@@ -70,7 +70,7 @@
 	\end{equation}
 	其中，$z$ 为输入大小为 $M*N$ 的 LR 图像；$x$ 为大小是 $Ms*Ns$ 的待预测 HR 图像；$H$ 是线性模糊核；$D_s$ 为下采样算子，系数 $s$ 是下采样的倍数； $n$ 为额外的噪声。图像超分辨率的任务就是通过 $z$ 恢复出未知的 HR 图像 $x$。由于在退化模型照中，下采样操作会带来信息损失，同时随着下采样倍数 $s$ 增大，LR 所包含的 HR 信息丢失越多。在这过程中，HR 与 LR 的对应是多对一的关系，完成超分辨率任务则变成了求解一个欠定的逆问题，即求得结果可能产生多个输出。因此需要引入先验信息，通过约束获得唯一解。\par 在本次赛题中，由于给出的测试集为 GPU 渲染图片的4倍线性下采样图，公式1中的线性模糊核 $H$ 则可以消去，同时假设没有引入来自其他的噪声干扰，则公式中噪声 $n$ 也可消去。最终得出得出式\ref{down_sample2}
 	\begin{equation}
-		z=z=D_sx \label{down_sample2}
+		z=D_sx \label{down_sample2}
 	\end{equation}
 	
 	\section{双三次插值算法介绍}
@@ -220,9 +220,9 @@ V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 	在上一步中我们已经通过纹理分类得到了图像块的纹理类型，根据这个类型我们可以选择预学习的滤波器，对相应的 Pre-SR 图像块进行卷积操作，从而得到了 SR 像素，最终输出 SR 图像。
 	
 	\chapter{效果展示}
-	我们将提出的算法与 RAISR 进行了对比:
+	我们将提出的算法与 RAISR 进行了对比,	其中 Set5 是单帧图像超分辨率任务中最常用的数据集，GameSet 是景嘉微在本次杯赛中提供的测试效果图片。
 	
-	\begin{figure}[htbp]
+	\begin{figure}[h]
 		\centering
 		\subfigure[GT]{
 			\includegraphics[scale=0.35]{./pic/GT-1.png}
@@ -263,19 +263,23 @@ V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 	\end{figure}
 
 
-	\newcounter{Rownumber}
-	\newcommand{\Rown}{\stepcounter{Rownumber}\theRownumber}
-	\begin{tabular}{|c|c|c|c|c|c|}\hline
-	 DataSet 				& Scale & Bicubic 	& RAISR & LBP-RAISR 		& LBP-RAISR(Quantized) 	\\\hline
-	 \Rown Set5(PSNR) 		& x4 	& 26.84 	& 27.05 & \textbf{27.61} 	& 27.50 				\\\hline
-	 \Rown Set5(SSIM) 		& x4 	& 0.790	 	& 0.803 & \textbf{0.812} 	& 0.808 				\\\hline
-	 \Rown Set5(LPIPS) 		& x4 	& 0.310 	& 0.269 & \textbf{0.192} 	& 0.196 				\\\hline
-	 \Rown GameSet(PSNR) 	& x4 	& 31.51 	& 31.59 & \textbf{31.85} 	& 31.70 				\\\hline
-	 \Rown GameSet(SSIM) 	& x4 	& 0.862 	& 0.861 & \textbf{0.870} 	& 0.865 				\\\hline
-	 \Rown GameSet(LPIPS) 	& x4 	& 0.265 	& 0.263 & \textbf{0.210} 	& 0.216 				\\\hline
-	\end{tabular}
-	其中 Set5 是单帧图像超分辨率任务中最常用的数据集，GameSet 是景嘉微在本次杯赛中提供的测试效果图片。
-	
+%	\newcounter{Rownumber}
+%	\newcommand{\Rown}{\stepcounter{Rownumber}\theRownumber}
+	\begin{table}[htb]
+		\small
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline
+			\textbf{DataSet} & \textbf{Scale} & \textbf{Bilinear} & \textbf{Bicubic} & \textbf{RAISR} & \textbf{LBP-RAISR} & \textbf{\begin{tabular}[c]{@{}c@{}}LBP-RAISR\\ (Quantized)\end{tabular}} \\ \hline
+			Set5(PSNR)       & x4             & 25.79             & 26.84            & 27.05          & \textbf{27.61}     & 27.50                                                                    \\ \hline
+			Set5(SSIM)       & x4             & 0.765             & 0.790            & 0.803          & \textbf{0.812}     & 0.808                                                                    \\ \hline
+			Set5(LPIPS)      & x4             & 0.335             & 0.310            & 0.269          & \textbf{0.192}     & 0.196                                                                    \\ \hline
+			GameSet(PSNR)    & x4             & 30.83             & 31.51            & 31.59          & \textbf{31.85}     & 31.70                                                                    \\ \hline
+			GameSet(SSIM)    & x4             & 0.847             & 0.862            & 0.861          & \textbf{0.870}     & 0.865                                                                    \\ \hline
+			GameSet(LPIPS)   & x4             & 0.288             & 0.265            & 0.263          & \textbf{0.210}     & 0.216                                                                    \\ \hline
+		\end{tabular}
+	\caption{各算法实现评分对比}
+	\end{table}
+
 	\chapter{总结}
 	基于 RASIR\textsuperscript{\cite{1}}的整体思路，我们提出了改进的 LBP-RAISR 算法。LBP-RAISR 背后的核心思想与 RAISR 相同，都是学习从 LR 图像到 HR 版本的映射关系，增强简单插值图像质量。映射是通过使用一组过滤器过滤 LR 图像的简单插值放大版本来完成的，这些过滤器旨在最小化输入图像和真实图像之间的欧氏距离。更具体地说，LBP-RAISR 使用了一种更简便快捷的纹理分类方法，从存储空间上和运算量上做了大量的优化，同时也保留了图像质量的效果。根据实验结果，可以较好的提升 RAISR 的性能以及运算时间。同时经过量化后适配 硬件设计并有损失太大的图像质量。由于我们采用的是 LBP 进行纹理分类，与 RAISR 中的哈希映射方法相比较，进一步减少了运算量，同时选择滤波器的方法是固定的，对于硬件上实现是高效便捷的。从更广泛的角度来看，我们希望 LBP-RAISR 作为学习到的滤波器映射与训练集的关联影响并不大，在这种情况下，学习的过滤器可以用于为任意输入图像进行 x4 的超分辨率图像输出。同时由于运算量的大大降低，让高分辨率图像进行实时的超分辨率任务也是可能的。
 
