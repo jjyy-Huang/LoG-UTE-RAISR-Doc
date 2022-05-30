@@ -2,6 +2,7 @@
 \usepackage{amsmath, amsthm, amssymb, bm, graphicx, hyperref, mathrsfs}
 \usepackage{geometry}
 \usepackage{subfigure}
+\usepackage{pdfpages}
 \usepackage{hyperref}[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue]
 
 %设置引用格式
@@ -24,6 +25,9 @@
 
 
 \begin{document}
+	
+	\includepdf[page=1]{./pic/cover.pdf}
+	
 	%-----------------------封面------------------
 	\maketitle	
 	\pagenumbering{Roman}
@@ -73,7 +77,7 @@
 	在数值分析这个数学分支中，双三次插值(Bicubic)\textsuperscript{\cite{10}\cite{11}}是二维空间中最常用的插值算法，是三次插值的一个拓展。而在图像处理中，双三次插值算法更是首选。双三次插值需要参考下周围16个像素($4 \times 4$)进行上采样，结果图像会比最近邻插值和双线性插值更平滑，因插值造成的伪影也更少。
 		\begin{figure}[h]
 			\centering
-			\includegraphics[scale=0.4]{./pic/bicubic-introduction.png}
+			\includegraphics[scale=1]{./pic/bicubic-introduction.pdf}
 			\caption{双三次插值算法简介}
 			\label{bicubic_introduction}
 		\end{figure}
@@ -191,7 +195,7 @@ V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 	由于在学习滤波器的时候会引入锐化操作，在使用该滤波器应用于简易插值后的图像，可能会引起结构变形。为了保留重要的结构，作者引入了 CT变换\textsuperscript{\cite{7}}，作用于简易插值后的图像与滤波后的图像。具体变换如图 \ref{CT_tran} 所示：
 		\begin{figure}[h]
 		\centering
-		\includegraphics[scale=0.36]{./pic/CT.png}
+		\includegraphics[scale=0.88]{./pic/CT.pdf}
 		\caption{CT变换}
 		\label{CT_tran}
 		\end{figure}
@@ -203,7 +207,7 @@ V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 	我们提出了一个创新的 \textbf{LBP-RAISR} 算法，以 \textbf{RAISR} 为主体框架，整体上分为了三个阶段。第一步，通过双三次插值算法\textsuperscript{\cite{4}\cite{5}}，将 LR 图像映射到 HR 图像上，得到最终需要的分辨率；第二步，遍历 Pre-HR 图像的每一个图像块，进行高斯-拉普拉斯(LoG)纹理检测后使用CLBP算法\textsuperscript{\cite{8}\cite{9}}进行纹理分类。显而易见，这里我们的设计与 \textbf{RAISR} 有较大的区别，这是由于硬件设计的考虑，会在下一节和 RTL设计文档 中详细解释。第三步，利用上一步的得到每个图像块的类型找到对应的滤波器，作用于图像块，得到更接近于原始 HR 的像素，最后得到更高质量的 SR 图像。整体框架如图\ref{overview}所示。
 	\begin{figure}[h]
 		\centering
-		\includegraphics[scale=0.3]{./pic/overview.jpg}
+		\includegraphics[scale=0.72]{./pic/overview.pdf}
 		\caption{算法架构}
 		\label{overview}
 	\end{figure}
