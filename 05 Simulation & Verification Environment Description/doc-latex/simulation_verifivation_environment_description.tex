@@ -69,8 +69,8 @@
 		\item Verilator \& GtkWave
 	\end{itemize}
 	\chapter{验证方法及策略}
-	采用\textbf{直接验证}与\textbf{随机验证}结合。\par
-	\textbf{直接验证}: 通过对比测试图片在 C Model 进行超分辨率算法运算结果与 RTL 代码在仿真中输出结果对比。\par
+	采用 \textbf{直接验证} 与 \textbf{随机验证} 结合。\\ \\
+	\textbf{直接验证}: 通过对比测试图片在 C Model 进行超分辨率算法运算结果与 RTL 代码在仿真中输出结果对比。\\
 	\textbf{随机验证}: 对部分子模块(如高斯滤波器、纹理分类器等)所需的运算数据通过产生随机种子产生随机数据，对比参考模型运算输出结果与待测模块输出结果。
 	
 	
@@ -118,14 +118,39 @@
 			\caption{验证平台}
 			\label{fig:testbench}
 		\end{figure}
-		
-		\section{工程目录}
-		\input{./pic/table.tex}
+
+		\section{验证计划}
+		\begin{itemize}
+			\item 使用 60 组真实图片进行验证；
+   			\item 使用 100 组随机生成图片进行验证；
+      		\item 使用极端数值进行验证；
+        	\item 使用随机数值进行验证。
+		\end{itemize}
+
 		\section{待验证设计}
+			\begin{itemize}
+				\item 纹理分类模块
+    			\item 自适应锐化模块
+			\end{itemize}
+
+		\section{完成验证设计}
+			\begin{itemize}
+				\item Bicubic 上采样模块
+			\end{itemize}
 	\chapter{覆盖率}
-	当前项目已完成设计部分，即将进入验证阶段。	
+	\section{Bicubic 上采样模块}
+	详细验证覆盖率结果可参考文档 \href{./ref/APV21B_Simulation_Verification_Enviroment.pdf}{APV21B-Simulation \& Verification Enviroment}。
+	\section{纹理分类模块}
+	当前模块已完成设计部分，即将进入系统验证阶段。	
+	\section{自适应锐化模块}
+	当前模块已完成设计部分，即将进入系统验证阶段。
 	\chapter{验证分析}
-	当前项目已完成设计部分，即将进入验证阶段。
+	\section{Bicubic 上采样模块}
+	符合设计预期。
+	\section{纹理分类模块}
+	当前模块已完成设计部分，即将进入系统验证阶段。
+	\section{自适应锐化模块}
+	当前模块已完成设计部分，即将进入系统验证阶段。
 
 
 \end{document}
