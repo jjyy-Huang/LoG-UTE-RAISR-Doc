@@ -65,7 +65,7 @@
 	
 	\chapter{Bicubic 上采样模块性能评估}
 	\section{性能参数}
-	使用 Vivado 与 Synopsys Synplify Premier 进行时序分析。输入 $960\times540$ 图像数据作为基准。
+	使用 Vivado 与 Synopsys Synplify Premier 进行时序分析。以输入 $960\times540$ 的图像数据为基准。
 		\subsection{最大频率}
 			\begin{table}[h]
 			\centering
@@ -82,6 +82,7 @@
 					Intel Max 10                & Synopsys Synplify Premier 2020.03 & 220.5               \\ \hline
 					Intel Arria V               & Synopsys Synplify Premier 2020.03 & 142.5               \\ \hline
 				\end{tabular}
+			\caption{最大频率}
 			\end{table}
 		\subsection{最大延迟}
 		仅用于评估该IP的路径时延，不考虑受系统延迟或其他限制。假设图像输入宽为 $W$ 位像素。
@@ -100,6 +101,7 @@
 				Intel Max 10            & Synopsys Synplify Premier 2020.03 & 220.5               \\ \hline
 				Intel Arria V           & Synopsys Synplify Premier 2020.03 & 142.5               \\ \hline
 			\end{tabular}
+		\caption{最大延迟}
 		\end{table}
 		\subsection{吞吐量}
 		用于评估不同图像帧大小进入。
@@ -113,6 +115,7 @@
 				640 x 360      & 2560 x 1440    & 1.08                  & 162.1               \\ \hline
 				960 x 540      & 3840 x 2160    & 0.48                  & 72.1                \\ \hline
 			\end{tabular}
+		\caption{吞吐量}
 		\end{table}
 	\section{资源使用量}
 	Xilinx Zynq UltraScale+ 器件的资源利用结果是在 Vivado 综合器下，使用 DSP48E2 和 XPM 宏进行评估的。\par	
@@ -126,6 +129,7 @@
 			XCZU15EG                         & \multicolumn{1}{c|}{960 × 540}                 & 300                & \multicolumn{1}{c|}{431}           & \multicolumn{1}{c|}{694}           & \multicolumn{1}{c|}{49\textasciicircum{}1} & 2.5\textasciicircum{}3 \\ \hline
 			XC7K325T                         & \multicolumn{1}{c|}{960 × 540}                 & 150                & \multicolumn{1}{c|}{1979}          & \multicolumn{1}{c|}{2713}          & \multicolumn{1}{c|}{30\textasciicircum{}2} & 2\textasciicircum{}3   \\ \hline
 		\end{tabular}
+	\caption{资源使用量}
 	\end{table}
 	其他器件的评估结果是使用 Verilog 自动推断完成的，可能由于每个器件的 DSP 模块的数据宽度不同而导致不同。实时视频 Bicubic IP 是为 Xilinx UltraScale+ 系列器件的 DSP48E2 模块特别优化的。为了最大限度地利用资源，建议使用这些器件进行合成。
 	
@@ -148,6 +152,7 @@
 				第一个像素进入到第一个像素输出   & $8\cdot W+14$   \\ \hline
 				最后一个像素进入到最后一个像素输出 & $8\cdot W + 14$ \\ \hline
 			\end{tabular}
+		\caption{最大延迟}
 		\end{table}
 		\subsection{吞吐量}
 		未进行评估。
@@ -170,10 +175,12 @@
 				Xilinx Zynq UltraScale+      & Vivado 2021.2          & 344.4               \\ \hline
 				Xilinx Versal AI Core Series & Vivado 2021.2          & 348.8               \\ \hline
 			\end{tabular}
+		\caption{最大频率}
 		\end{table}	
+		\newpage
 		\subsection{最大延迟}
 		仅用于评估该IP的路径时延，不考虑受系统延迟或其他限制。假设图像输入宽为 $W$ 位像素。
-		\begin{table}[h]
+		\begin{table}[htb]
 			\centering
 			\begin{tabular}{|c|c|c|}
 				\hline
@@ -182,6 +189,7 @@
 				第一个像素进入到第一个像素输出   & $3\cdot W+10$   & 351.3               \\ \hline
 				最后一个像素进入到最后一个像素输出 & $3\cdot W + 10$ & 344.4               \\ \hline
 			\end{tabular}
+		\caption{最大延迟}
 		\end{table}
 		\subsection{吞吐量}
 		未进行评估。
@@ -195,6 +203,7 @@
 			& \multicolumn{1}{c|}{\textbf{Input resolution}} & \textbf{fclk(MHz)} & \multicolumn{1}{c|}{\textbf{LUTs}} & \multicolumn{1}{c|}{\textbf{FFs}} & \multicolumn{1}{c|}{\textbf{DSPs}} & \multicolumn{1}{c|}{\textbf{BRAM}} & \textbf{URAM} \\ \hline
 			XC2V15EG                         & \multicolumn{1}{c|}{960 × 540}                 & 300                & \multicolumn{1}{c|}{228}           & \multicolumn{1}{c|}{1633}         & \multicolumn{1}{c|}{148}           & \multicolumn{1}{c|}{5}             & 10            \\ \hline
 		\end{tabular}
+	\caption{资源使用量}
 	\end{table}
 	
 
