@@ -174,7 +174,7 @@ void bicubic_interp_fixed(Bitmap* bitmap, Bitmap** pOutput);
 		\textbf{参数:} \par bitmap: 要进行双三次插值的图像 \par pBitmap: Bitmap类型的指针变量，用于存储fileName的文件信息 \\
 		\textbf{返回值：}\par 无返回值\\
 		\textbf{作用：}\par 对输入图像进行双三次插值，提高图像分辨率\\
-		双三次插值内部实现具体可参考文档\href{.ref/APV21B_Implemented_Functions.pdf}{APV21B_Implemented_Functions}
+		双三次插值内部实现具体可参考文档 \href{./ref/APV21B_Implemented_Functions.pdf}{APV21B-Implemented Functions}。
 	
 	\item \textbf{上采样——多线程实现}
 		\begin{lstlisting}[numbers=none]
@@ -204,7 +204,7 @@ void freeqWeightSpace(qint16_t ** weight, int32_t type);
 	
 	
 		\subsection{图片读取与格式转换}
-		图片处理接口细节可参考文档\href{.ref/APV21B_Implemented_Functions.pdf}{APV21B_Implemented_Functions}
+		图片处理接口细节可参考文档 \href{./ref/APV21B_Implemented_Functions.pdf}{APV21B-Implemented Functions}。
 		\begin{enumerate}
 			\item \textbf{ReadBitmap}——读取bmp格式图片
 				\begin{lstlisting}[numbers=none]
@@ -263,16 +263,6 @@ void DestoryImageMat(ImageMat* mat);
 				\textbf{返回值：}\par 无返回值 \\
 				\textbf{作用：}\par 内部调用 free 释放申请的图像内存 \\					
 		\end{enumerate}
-		
-		\chapter{最终效果}
-		
-		\begin{figure}[h]
-			\centering
-			\includegraphics[width=0.7\linewidth]{pic/test}
-			\caption{}
-			\label{fig:test}
-		\end{figure}
-
 
 	
 	
