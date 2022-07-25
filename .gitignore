@@ -1,2 +1,9 @@
 !**/.keep
 **/.DS_Store
+**/*.aux
+**/*.log
+**/*.out
+**/*.gz
+**/*.toc
+**/*.fls
+**/*.fdb_latexmk

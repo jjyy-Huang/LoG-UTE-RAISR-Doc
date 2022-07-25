@@ -4,7 +4,7 @@
 \usepackage{subfigure}
 \usepackage{pdfpages}
 \usepackage{hyperref}[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue]
-
+\usepackage{listings}
 %设置引用格式
 \hypersetup{
 	colorlinks=true,linkcolor=black,colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue
@@ -18,7 +18,7 @@
 \geometry{left=2.54cm,right=2.54cm,top=3.18cm,bottom=3.18cm}
 
 
-\title{{\Huge{\textbf{算法设计说明文档}}}\normalsize{\\——第六届全国大学生集成电路创新创业大赛景嘉微杯初赛提交文档}}
+\title{{\Huge{\textbf{算法设计说明文档}}}\normalsize{\\——第六届全国大学生集成电路创新创业大赛景嘉微杯分赛区决赛提交文档}}
 \author{队名：虹ヶ咲学园芯片设计同好会\\ 成员：黄金源\space邓立唯\space林明锋}
 \date{\today}
 \linespread{1.5}
@@ -37,9 +37,10 @@
 		\Huge\textbf{前言}
 	\end{center}~\
 	
-	本文档（算法设计说明文档）仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛初赛提交文档供评委评分使用。
+	本文档（算法设计说明文档）仅作为 虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛分赛区决赛提交文档供评委评分使用。
 	~\\
 	\begin{flushright}
+		\includegraphics[width=0.25\linewidth]{pic/logo}\\
 		\begin{tabular}{c}
 			虹ヶ咲学园芯片设计同好会\\
 			\today
@@ -58,13 +59,14 @@
 	\chapter{概要}
 	\section{背景介绍}
 	单幅图像超分辨率重建是指将一副低分辨率图像通过特定算法处理获得高分辨率图像的的一种技术。
+	
 	图像超分辨率重建一直以来都是图像处理领域中一个重要的研究方向之一，在医学、遥感、图像识别、网络媒体传输、动画制作与合成等领域都有着重要的应用。
 	目前已有许多优秀的算法应用于现实的产品上，但是有效保持图像纹理细节且使图像边缘区域不失真，同时兼顾处理速度一直是图像超分辨率重建技术的一个难题。
 	\par 在 GPU 处理领域，为了减轻像素引擎的负载，通常使用渲染低分辨率后经由算法放大至期望图像大小的方法已经成为一个被广泛使用的性能优化手段。
-	实现一种对帧存颜色缓冲区图像的超采样处理 IP ,用于硬件性能不足时将低分辨率图像放大至高分辨率,从而在尽可能贴合高分辨率渲染效果的同时提升帧率、降低功耗。
+	实现一种对帧存颜色缓冲区图像的超采样处理 IP，用于硬件性能不足时将低分辨率图像放大至高分辨率，从而在尽可能贴合高分辨率渲染效果的同时提升帧率、降低功耗。
 	\section{赛题分析}
 	在本赛题中，由于举办方提供的图像样例仅包含像素信息，缺失了渲染相关的运动信息、位置信息、光线信息等，
-	故可将本赛题视作 Single Image Super Resolution(SISR) 任务。同时因为比赛方限制使用基于神经网络设计的算法，
+	故可将本赛题视作 Single Image Super Resolution(SISR) 任务。由于比赛方限制使用基于神经网络设计的算法，
 	我们队伍将基于传统算法结合机器学习的方法进行图像超分辨率核心算法设计。
 	
 	
@@ -75,19 +77,19 @@
 		z=D_sHx + n \label{down_sample1}
 	\end{equation}
 	其中，$z$ 为输入大小为 $M*N$ 的 LR 图像；$x$ 为大小是 $Ms*Ns$ 的待预测 HR 图像；$H$ 是线性模糊核；$D_s$ 为下采样算子，系数 $s$ 是下采样的倍数； 
-	$n$ 为额外的噪声。图像超分辨率的任务就是通过 $z$ 恢复出未知的 HR 图像 $x$。由于在退化模型照中，下采样操作会带来信息损失，
-	同时随着下采样倍数 $s$ 增大，LR 所包含的 HR 信息丢失越多。在这过程中，HR 与 LR 的对应是多对一的关系，完成超分辨率任务则变成了求解一个欠定的逆问题，
+	$n$ 为额外的噪声。图像超分辨率的任务就是通过 $z$ 恢复出未知的 HR 图像 $x$。由于在退化模型之中，下采样操作会带来信息损失，
+	同时随着下采样倍数 $s$ 增大，LR 所包含的 HR 信息越少。在这过程中，HR 与 LR 的对应是多对一的关系，完成超分辨率任务则变成了求解一个欠定逆问题，
 	即求得结果可能产生多个输出。因此需要引入先验信息，通过约束获得唯一解。
-	\par 在本次赛题中，由于给出的测试集为 GPU 渲染图片的4倍线性下采样图，公式\ref{down_sample1}
-	中的线性模糊核 $H$ 则可以消去，同时假设没有引入来自其他的噪声干扰，则公式中噪声 $n$ 也可消去。最终得出得出式\ref{down_sample2}
+	\par 在本次赛题中，由于给出的测试集为 GPU 渲染图片的 4 倍线性下采样图，公式 \ref{down_sample1} 中的线性模糊核 $H$ 则可以消去，
+	同时假设没有引入来自其他的噪声干扰，则公式中噪声 $n$ 也可消去。最终得出得出式 \ref{down_sample2}
 	\begin{equation}
 		z=D_sx \label{down_sample2}
 	\end{equation}
 	
 	\section{双三次插值算法介绍}
 	在数值分析这个数学分支中，双三次插值(Bicubic)\textsuperscript{\cite{10}\cite{11}}是二维空间中最常用的插值算法，
-	是三次插值的一个拓展。而在图像处理中，双三次插值算法更是首选。双三次插值需要参考下周围16个像素($4 \times 4$)进行上采样，
-	结果图像会比最近邻插值和双线性插值更平滑，同时插值造成的伪影也更少。
+	是三次插值的一个拓展。而在图像处理中，双三次插值算法更是首选。双三次插值需要参考周围 16 个像素($4 \times 4$)进行上采样，
+	所得到的上采样图像会比最近邻插值和双线性插值更平滑，同时插值造成的伪影也更少。
 		\begin{figure}[h]
 			\centering
 			\includegraphics[scale=1]{./pic/bicubic-introduction.pdf}
@@ -96,8 +98,8 @@
 		\end{figure}
 	\par
 	作为一个整体，双三次插值算法需要计算插值像素中心与原始像素中心之间的距离。使用与距离存在映射关系的双三次插值函数计算相关系数，
-	然后使用该系数与原始像素点相乘，最终与16个原始像素点的乘积之和就是新的插值像素点结果。
-	可以简单的看作新插值点与原始像素点对应的曼哈顿距离加权，可以用式\ref{bicubic_1}和式\ref{bicubic_2}表示:
+	然后使用该系数与原始像素点相乘，最终与 16 个原始像素点的乘积之和就是新的插值像素点结果。
+	可以简单地将新插值点看作与原始像素点对应的曼哈顿距离加权，可以用式 \ref{bicubic_1} 和式 \ref{bicubic_2} 表示:
 	\begin{equation}
 	SP_{\vec{s}}=\sum_{\vec{o}\in{RSB}}f_B(\vert\vec{s}-\vec{o}\vert)\cdot OP_{\vec{o}}		
 	\label{bicubic_1}
@@ -115,12 +117,14 @@
 	\par
 	其中，$SP_{\vec{s}}$ 为插值后像素，$\vec{s}$ 是对应的索引向量。$RSB$ 为当前插值像素所在的插值块对应的原始像素的索引集合。
 	$OP_{\vec{o}}$ 为原始像素，$\vec{o}$ 是对应的索引向量。$f_B$ 则是双三次插值的核心函数。
-	\par 由于双三次插值算法在我们算法设计中为预处理部分，我们进行了针对于硬件设计的大量优化，
-	具体请参考文档 \href{./ref/APV21B_Algorithm_Description.pdf}{APV21B-Algorithm Description} 介绍，此处不展开介绍。
+	\par 由于双三次插值算法在我们算法设计中为预处理部分，在实现上我们着重关注在硬件设计上，并针对性的进行了大量优化，
+	具体请参考文档 \href{./ref/APV21B_Algorithm_Description.pdf}{\textit{APV21B-Algorithm Description}} 介绍，此处不展开介绍。
 	
 	\section{高斯-拉普拉斯算子介绍}
-	\subsection{简要概述}
-	拉普拉斯算子是图像二阶空间导数的二维各向同性测度。图像的拉普拉斯算子强调快速强度变化的区域，因此经常用于边缘检测。拉普拉斯算子通常应用于先用近似高斯平滑滤波器进行平滑的图像，以降低其对噪声的敏感性，因此这两种变体将在这里一起描述。该算子通常以单个灰度图像作为输入，生成另一个灰度图像作为输出。
+	\subsection{概述}
+	拉普拉斯算子是图像二阶空间导数的二维各向同性测度。图像的拉普拉斯算子强调快速强度变化的区域，因此经常用于边缘检测。
+	拉普拉斯算子通常应用于近似高斯平滑滤波器进行平滑后的图像，以降低其对噪声的敏感性，因此这两种变体将在这里一起描述。
+	该算子通常以单个灰度图像作为输入，生成另一个灰度图像作为输出。在本算法设计中，在该算子后引入一个阈值控制输出，从而实现图像二值化效果。
 	\subsection{原理}
 	记图片像素的强度值为$I(x,y)$ ，其所对应的拉普拉斯算子$L(x,y)$如式 \ref{lap} 所示：
 	\begin{equation}	\label{lap}
@@ -149,19 +153,21 @@
 		\end{tabular}
 		\caption{近似于拉普拉斯算子的二阶导数离散卷积核}
 	\end{table}
-	以上的两个卷积核均可以近似为拉普拉斯算子。因为这两个卷积核都是对图片二阶导数的近似估计，它们对于图片中的噪声均很敏感。因此，为了解决这一问题，我们一般会在进行拉普拉斯操作之前先对图像进行高斯平滑滤波处理，二维的高斯平滑卷积核可以用式 \ref{gauss} 进行表示。
+	以上的两个卷积核均可以近似为拉普拉斯算子。因为这两个卷积核都是对图片二阶导数的近似估计，它们对于图片中的噪声均很敏感。因此，为了解决这一问题，
+	我们在进行拉普拉斯操作之前先对图像进行高斯平滑滤波处理，二维的高斯平滑卷积核可以用式 \ref{gauss} 进行表示。
 	\begin{equation}	\label{gauss}
 		G_\sigma (x,y)=\frac{1}{2\pi \sigma ^2} exp(-\frac{x^2+y^2}{2\sigma ^2}) 
 	\end{equation}
-	先利用高斯平滑滤波进行处理，可以降低图片中的高频噪声，方便后续的拉普拉斯操作。事实上由于卷积操作具有结合律，因此我们先将高斯平滑滤波器与拉普拉斯滤波器进行卷积，然后利用得到的混合滤波器去对图片进行卷积以得到所需的结果。
+	先利用高斯平滑滤波进行处理，可以降低图片中的高频噪声，方便后续的拉普拉斯操作。
 	
 	\section{局部二值模式介绍}
 		\subsection{概述}
-		局部二值模式 (LBP, Local Binary Pattern)\textsuperscript{\cite{8}}\textsuperscript{\cite{9}}\textsuperscript{\cite{13}} 是一种用来描述图像局部纹理特征的算子；它具有旋转不变形和灰度不变性等显著优点，适合用来提取图像的局部纹理特征。	
+		局部二值模式 (LBP, Local Binary Pattern)\textsuperscript{\cite{8}}\textsuperscript{\cite{9}}\textsuperscript{\cite{13}} 是一种用来描述图像局部纹理特征的算子；
+		它具有旋转不变形和灰度不变性等显著优点，适合用来提取图像的局部纹理特征。	
 		\subsection{原理}
 		原始的 LBP 算子\textsuperscript{\cite{13}}定义在 $3\times3$ 的窗口内，以窗口中心像素为阈值，将相邻的 8 个像素的灰度值与其进行比较，若周围像素值大于中心像素值，
-		则该像素点的位置被标记为 1，否则为 0。这样，$3\times3$ 领域内的 8 个点经过比较可产生 8 位二进制数 (通常转换为十进制数即 LBP 码，共 256 种)，即得到该窗口中心像素点的 LBP 值，
-		并用这个值来反映该区域的纹理信息。可用公式\ref{lbp}来进行描述该过程。
+		则该像素点的位置被标记为 1，否则为 0。如此，$3\times3$ 领域内的 8 个点经过比较可产生 8 位二进制数 (通常转换为十进制数即 LBP 码，共 256 种)，即得到该窗口中心像素点的 LBP 值，
+		并用这个值来反映该区域的纹理信息。可用公式 \ref{lbp} 来进行描述该过程。
 		\begin{equation}
 			LBP_{P,R}=\sum_{p=0}^{P-1}s(g_p-g_c)2^{p},\quad s(x)=\begin{cases}
 				1  &,x\geq0\\
@@ -176,16 +182,18 @@
 		CLBP 算子\textsuperscript{\cite{9}}引入图像的局部梯度参数以增强纹理分类能力。
 	\section{RAISR介绍}
 	\subsection{概述}
-	Google 在 2016 年提出了 \textbf{RAISR}\textsuperscript{\cite{1}} 算法，一种基于样本学习的超分辨率算法。
+	Google 在 2016 年提出了 \textbf{RAISR}\textsuperscript{\cite{1}} 算法，一种基于样本学习的超分辨率算法。 
 	RAISR 主要的特点是快速、准确，在运行速度上比基于深度学习的方法有大幅提升，同时保持了具有竞争力的图像重建质量。
-	其核心思想是通过简单的插值方式把 LR 图像转化成 Pre-HR 图像，然后根据 Pre-HR 图像局部的梯度信息来对图像块进行分类，对于不同类别的图像块对应采用不同的与训练的滤波器进行卷积操作对图像纹理进行增强。
+	其核心思想是通过简单的插值方式把 LR 图像转化成 Pre-HR 图像，然后根据 Pre-HR 图像局部的梯度信息来对图像块进行分类，
+	对于不同类别的图像块对应采用不同的与训练的滤波器进行卷积操作对图像纹理进行增强。
 	在足够的训练数据下，通过学习一组滤波器建立成对的 LR patch与 HR 像素的映射关系。
-	\par RAISR 将 patch 分为了216类并结合 $R^2$ 个像素类型 (R为上采样因子)，这其中包括了 3类像素强度、24类纹理角度、3类图像快相关性。
+	\par RAISR 将 patch 分为了 216 类并结合 $R^2$ 个像素类型 (R为上采样因子)，这其中包括了 3类像素强度、24类纹理角度、3类图像块相关性。
 	因此，当上采样因子 $R$ 为4时，便需要 3456 个大小为 11 x 11 的滤波器。
-	通过哈希映射的方式将 patch 分类到不同类别中，而不需要使用较为复杂的聚类方式如K-means\textsuperscript{\cite{2}}、或者是高斯混合模型\textsuperscript{\cite{3}}，
-	从而降低分类查找时间。在 RAISR 中，哈希表键值是通过估计 patch 的局部梯度统计来获得。接下来我们会分析 RAISR 的一些具体实现。
+	通过哈希映射的方式将 patch 分类到不同类别中，而不需要使用较为复杂的聚类方式如 K-means\textsuperscript{\cite{2}}、或者是高斯混合模型\textsuperscript{\cite{3}}，
+	从而降低分类查找时间。在 RAISR 中，哈希表键值是通过计算 patch 的局部梯度统计来获得。接下来我们会分析 RAISR 的一些具体实现。
 	\subsection{哈希表键计算方法}
-	通过特征分析\textsuperscript{\cite{6}}来计算用作哈希表键的图像块的局部梯度特征。第 $k$ 个的最近领域通常是一个 $\sqrt{n}*\sqrt{n}$ 的 patch，其中，像素包含于 $k_1,...,k_n$。每个图像块的局部梯度特征放置在一个 $n \times 2$ 的矩阵\ref{matrix_1}中：
+	通过特征分析\textsuperscript{\cite{6}}来计算用作哈希表键的图像块的局部梯度特征。第 $k$ 个的最近领域通常是一个 $\sqrt{n}*\sqrt{n}$ 的 patch，其中，像素包含于 $k_1,...,k_n$。
+	每个图像块的局部梯度特征放置在一个 $n \times 2$ 的矩阵 \ref{matrix_1} 中：
 	\begin{equation}
 	G_k=
 	\left[
@@ -220,7 +228,7 @@
 		\mu=\lceil\frac{\mu_k}{Q_\mu}\rceil				\label{hash_9}
 	\end{equation}
 	在以上式 \ref{hash_7} 、式 \ref{hash_8} 和式 \ref{hash_9} 中，$Q_s$、$Q_\theta$、$Q_\mu$ 分别代表了强度、角度和相关系数的量化因子。
-	通过这三种参数，构建了216个哈希键映射分类。
+	通过这三种参数，构建了 216 个哈希键映射分类。
 	
 	\subsection{滤波器学习}
 	在 RAISR 的学习阶段，需要通过建立一个 LR 图像块与 HR 像素点映射的训练数据集，用于学习一个 $d\times d$ 的滤波器 $h$。
@@ -228,7 +236,8 @@
 	\begin{equation}
 h=\min_h\sum_{i=1}^L\lVert{A_ih-b_i}\rVert_2^2 \label{filter_10}
 	\end{equation} 
-	其中，$h$ 是一个 $d^2 \times 1$ 向量表示学习的滤波器，$A_i$ 是由 Pre-SR 图像 $y_i$ 中提取图像块 $d\times d$ 后组成的大小为 $MN\times d^2$ 矩阵，$b_i$ 是由 HR 图像 $x_i$ 中提取的像素点所构成，对应 $y_i$ 图像块的中心坐标。
+	其中，$h$ 是一个 $d^2 \times 1$ 向量表示学习的滤波器，$A_i$ 是由 Pre-SR 图像 $y_i$ 中提取图像块 $d\times d$ 后组成的大小为 $MN\times d^2$ 矩阵，
+	$b_i$ 是由 HR 图像 $x_i$ 中提取的像素点所构成，对应 $y_i$ 图像块的中心坐标。
 	在论文\textsuperscript{\cite{1}}中，作者为了降低求解滤波器的运算量和数据存储，将式\ref{filter_10}拓展为：
 	\begin{equation}
 h=\min_h\lVert Qh-V\rVert_2^2		\label{filter_11}
@@ -240,10 +249,11 @@ Q=A^TA=\sum_{i=1}^LA_i^TA_i
 	\begin{equation}
 V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 	\end{equation}
-其中，$Q$ 是一个 $d^2 \times d^2$ 的小矩阵和 $V$ 是一个 $d^2 \times 1$ 的列向量。到此滤波器的学习就此结束。
+其中，$Q$ 是一个 $d^2 \times d^2$ 的小矩阵和 $V$ 是一个 $d^2 \times 1$ 的列向量。到此滤波器的学习介绍就此结束。
 
 	\subsection{CT变换}
-	由于在学习滤波器的时候会引入锐化操作，在使用该滤波器应用于简易插值后的图像，可能会引起结构变形。为了保留重要的结构，作者引入了 CT变换\textsuperscript{\cite{7}}，作用于简易插值后的图像与滤波后的图像。具体变换如图 \ref{CT_tran} 所示：
+	由于在学习滤波器的时候会引入锐化操作，在使用该滤波器应用于简易插值后的图像，可能会引起结构变形。为了保留重要的结构，作者引入了 CT变换\textsuperscript{\cite{7}}，作用于简易插值后的图像与滤波后的图像。
+	具体变换如图 \ref{CT_tran} 所示：
 		\begin{figure}[h]
 		\centering
 		\includegraphics[scale=0.88]{./pic/CT.pdf}
@@ -255,17 +265,17 @@ V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 	
 	\chapter{算法优化}
 	通过上节我们可以看到，RAISR 作者对于滤波器的学习以及应用进行了不少的优化，但是对于我们将该算法应用到硬件实现上，有着不小的挑战。第一个是在于，每个像素类型需要学习 216 个滤波器，
-	而整幅图像可分为了 16 种类型，总共就需要 3456 个滤波器进行片上存储。在 FPGA 上存储如此大量的数据是不划算的。
+	而对于进行 4 倍上采样的整幅图像可分为 16 种类型，总共就需要 3456 个滤波器进行片上存储。在 FPGA 上存储如此大量的数据是不划算的。
 	第二点是，为了能获得像素更多的信息，RAISR 采用了 $11\times11$ 大小的滤波器进行卷积，这对于硬件资源消耗量极大，
-	在考虑量化同时保留运算过程中数据合适位宽并满足运算时延，每个像素进行锐化操作至少需要 180 个 DSP 进行乘累加运算(不考虑硬件复用以减少资源消耗)，总延时至少 12 个时钟周期输出延迟。
+	在考虑量化同时保留运算过程中数据合适位宽并满足运算时延，每个像素进行锐化操作至少需要 180 个 DSP 进行乘累加运算(不考虑硬件复用以减少资源消耗)，总延时至少 12 个时钟周期输出延迟，该结果已经考虑了使用树形结构对数据进行运算。
 	第三点，哈希表键的运算不仅需要进行除法、开方及反正切运算，还需要进行奇异值分解，这对于 FPGA 实时性设计要求难度提升了一个等级。
 	\section{概述}
 	我们提出了一个创新的 \textbf{LBP-RAISR} 算法，以 \textbf{RAISR} 为主体框架，整体上分为了三个阶段。
 	第一步，通过双三次插值算法\textsuperscript{\cite{4}\cite{5}}，将 LR 图像映射到 HR 图像上，得到最终需要的目的分辨率图像 Pre-SR；
 	第二步，对图像以每个像素为中心进行 $5\times5$ 分块，遍历 Pre-HR 图像的每一个图像块，
-	进行高斯-拉普拉斯(LoG)纹理检测后使用 CLBP 算法\textsuperscript{\cite{8}\cite{9}}进行纹理分类。
-	显而易见，这里我们的设计与 \textbf{RAISR} 有较大的区别，这是由于硬件设计的考虑，会在下一节和 RTL设计文档 中详细解释。
-	第三步，利用上一步的得到每个图像块的类型找到对应的滤波器，作用于图像块，得到更接近于原始 HR 的像素，最后得到更高质量的 SR 图像。
+	进行高斯-拉普拉斯(LoG)纹理检测后使用 CLBP 算法\textsuperscript{\cite{8}\cite{9}}结合角度信息求解进行纹理分类。
+	显而易见，这里我们的设计与 \textbf{RAISR} 有较大的区别，这是出于对硬件设计的考量，具体的设计细节会在下一节和 RTL设计文档 中详细解释。
+	第三步，利用上一步的得到每个图像块的类型找到对应的滤波器，作用于图像块进行卷积，得到更接近于原始 HR 的像素，最后得到更高质量的 SR 图像。
 	整体框架如图\ref{overview}所示。
 	\begin{figure}[h]
 		\centering
@@ -275,11 +285,12 @@ V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 	\end{figure}
 	\section{实现步骤}
 	\subsection{双三次插值}
-	作为第一步，我们需要将 LR 图像先上采样到需要的分辨率，可以使用传统的插值方法如最近邻插值、双线性插值、双三次差值、Lanczos插值等算法。由于考虑到上采样图片的质量效果会应影响到最终的高分辨率图片质量与运算过程中的复杂度，双三次插值成为了我们算法预处理的选择。
+	作为第一步，我们需要将 LR 图像先上采样到需要的分辨率，可以使用传统的插值方法如最近邻插值、双线性插值、双三次插值、Lanczos 插值等算法。
+	由于考虑到上采样图片的质量效果会应影响到最终的高分辨率图片质量与运算过程中的尽可能降低复杂度，双三次插值成为了我们算法预处理的最优选择。
 	\subsection{纹理分类}
-	我们对经过4倍上采样后的 Pre-SR 图片进行高斯-拉普拉斯滤波(LoG)\textsuperscript{\cite{12}}，然后确定一个阈值区间进行二值化操作，
+	我们对经过 4 倍上采样后的 Pre-SR 图片先进行高斯-拉普拉斯滤波(LoG)\textsuperscript{\cite{12}}，然后给定一个阈值区间对进行滤波后的像素值进行二值化操作，
 	采用 CLBP 算法对二值化后的图像纹理进行按块分类。这里需要注意的是，我们采用 $5 \times 5$ 的图像块进行纹理分类，由于已经对图像块进行了纹理检测这一步操作，
-	所以 CLBP 算法步骤我们并没有严格执行，保留 $C$ 中心像素与 $u$ 统一编码这两个参数, 考虑到该算法需要对圆形区域检测需要进行三角函数进行运算，
+	所以 CLBP 算法步骤我们并没有严格执行，保留 $C$ 中心像素与 $u$ 统一编码这两个参数。考虑到该算法需要对圆形区域检测需要进行三角函数进行运算，
 	我们将其近似等效为最外边缘的二值像素，从而减轻运算量。但是 CLBP 算法经过统一编码后具有旋转不变形，与滤波器需要学习局部纹理方向角度特征相矛盾，
 	故此我们增加了一步操作，当进行对像素统一编码时，保留了角度信息，从而增加选择滤波器参数条件。此时，纹理分类结束。
 	\subsection{卷积输出}
@@ -336,25 +347,25 @@ V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 		\begin{tabular}{|c|c|c|c|c|c|c|}
 			\hline
 			\textbf{DataSet} & \textbf{Scale} & \textbf{Bilinear} & \textbf{Bicubic} & \textbf{RAISR} & \textbf{LBP-RAISR} & \textbf{\begin{tabular}[c]{@{}c@{}}LBP-RAISR\\ (Quantized)\end{tabular}} \\ \hline
-			Set5(PSNR)       & x4             & 25.79             & 26.84            & 27.05          & \textbf{27.61}     & 27.50                                                                    \\ \hline
-			Set5(SSIM)       & x4             & 0.765             & 0.790            & 0.803          & \textbf{0.812}     & 0.808                                                                    \\ \hline
-			Set5(LPIPS)      & x4             & 0.335             & 0.310            & 0.269          & \textbf{0.192}     & 0.196                                                                    \\ \hline
-			GameSet(PSNR)    & x4             & 30.83             & 31.51            & 31.59          & \textbf{31.85}     & 31.70                                                                    \\ \hline
-			GameSet(SSIM)    & x4             & 0.847             & 0.862            & 0.861          & \textbf{0.870}     & 0.865                                                                    \\ \hline
-			GameSet(LPIPS)   & x4             & 0.288             & 0.265            & 0.263          & \textbf{0.210}     & 0.216                                                                    \\ \hline
+			Set5(PSNR)       & x4             & 25.79             & 26.84            & 27.05          & \textbf{27.61}     & \textbf{27.61}\\ \hline
+			Set5(SSIM)       & x4             & 0.765             & 0.790            & 0.803          & 0.812     			& \textbf{0.817}                                                                    \\ \hline
+			Set5(LPIPS)      & x4             & 0.335             & 0.310            & 0.269          & \textbf{0.198}     & 0.200                                                                    \\ \hline
+			GameSet(PSNR)    & x4             & 30.83             & 31.51            & 31.59          & \textbf{32.02}     & 32.00                                                                    \\ \hline
+			GameSet(SSIM)    & x4             & 0.847             & 0.862            & 0.861          & 0.870     		& \textbf{0.871}                                                                    \\ \hline
+			GameSet(LPIPS)   & x4             & 0.288             & 0.265            & 0.263          & \textbf{0.209}     & 0.211                                                                    \\ \hline
 		\end{tabular}
 	\caption{各算法实现评分对比}
 	\end{table}
 
 	\chapter{总结}
-	基于 RASIR\textsuperscript{\cite{1}}的整体思路，我们提出了改进的 LBP-RAISR 算法。LBP-RAISR 背后的核心思想与 RAISR 相同，
-	都是学习从低分辨率图像到高分辨率图像的映射关系，增强简单插值图像质量。锐化过程是通过使用一组滤波器锐化通过简单插值放大的 Pre-SR 图像来完成的，
+	基于 RASIR\textsuperscript{\cite{1}} 的整体思路，我们提出了改进的 LBP-RAISR 算法。LBP-RAISR 背后的核心思想与 RAISR 相同，
+	学习从低分辨率图像到高分辨率图像的映射关系，用于增强经过简单插值后的图像质量。锐化过程是通过使用一组滤波器，对简单插值放大的 Pre-SR 图像进行操作。
 	这些滤波器旨在最小化输入图像和真实图像之间的欧氏距离。更具体地说，LBP-RAISR 使用了一种更简便快捷的纹理分类方法，从存储空间上和运算量上做了大量的优化，
-	同时也保留了图像质量的效果。根据实验结果，可以较好的提升 RAISR 的性能以及运算时间。
-	同时经过量化后适配硬件设计并没有损失太大的图像质量。由于我们采用的是局部二值模式进行纹理分类，与 RAISR 中的哈希映射方法相比较，进一步减少了运算量，
+	同时也保留了图像质量的效果。根据大量实验得知，可以较好的提升 RAISR 的性能以及运算时间。
+	经过量化后适配硬件设计并没有损失太大的图像质量。由于我们采用的是基于中心的局部二值模式 (CLBP) 变体与高斯-拉普拉斯滤波 (LoG) 结合的算法进行纹理分类，与 RAISR 中的哈希映射方法相比较，进一步减少了运算量，
 	同时选择滤波器的方法是固定的，这对于硬件上实现是高效便捷的。从更广泛的角度来看，我们希望 LBP-RAISR 中预学习的滤波器映射与训练集的关联影响尽可能小，
-	在这种情况下，学习的过滤器可以用于为任意输入图像进行 $\times4$ 的超分辨率图像输出。
-	由于运算量的大大降低，让高分辨率图像进行实时的超分辨率任务也是可能的。
+	在这种情况下，学习的过滤器可以用于任意尺寸输入图像进行 $\times4$ 的超分辨率图像输出。
+	由于运算量的大大降低，让高分辨率图像进行实时的超分辨率任务也是可能的。在软件实现过程中，多线程优化下处理一张 4K 图像仅需要 3.6 秒左右(包含图像读写时间)。
 
 
 	\newpage
@@ -363,14 +374,14 @@ V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 		\bibitem{1}Romano, Yaniv, John Isidoro, and Peyman Milanfar. "RAISR: rapid and accurate image super resolution." IEEE Transactions on Computational Imaging 3.1 (2016): 110-125.
 		\bibitem{2}Jeong, S. C.; Song, B. C. Training-based superresolution algorithm using k-means clustering and detail enhancement. In: Proceedings of the 18th European Signal Processing Conference, 1791–1795, 2010.
 		\bibitem{3} Yu, G. S.; Sapiro, G.; Mallat, S. Solving inverse problems with piecewise linear estimators: From Gaussian mixture models to structured sparsity. IEEE Transactions on Image Processing Vol. 21, No. 5, 2481–2499, 2012
-		\bibitem{4}R.G. Keys, “Cubic convolution interpolation for digital image processing,” IEEE Transaction on Acoustics, Speech and Signal processing, vol. 29, no. 6, Dec. 1981, pp. 1153-1160.
-		\bibitem{5}H.S. Hou and H.C. Andrews, “Cubic splines for image interpolation and digital filtering,” IEEE Transaction Signal processing, vol. 26, no. 6, Dec. 1978, pp. 1153-1160.
-		\bibitem{6}X. Feng and P. Milanfar, “Multiscale principal components analysis for image local orientation estimation,” Proceedings of the 36th Asilomar Conference on Signals, Systems and Computers, Pacific Grove, CA, November 2002. 5
-		\bibitem{7}Zabih, R.; Woodfill, J. Non-parametric local transforms for computing visual correspondence. In: Computer Vision — ECCV ’94. Lecture Notes in Computer Science, Vol. 801. Eklundh, J. O. Ed. Springer Berlin Heidelberg, 151–158, 1994.
+		\bibitem{4}R.G. Keys, "Cubic convolution interpolation for digital image processing," IEEE Transaction on Acoustics, Speech and Signal processing, vol. 29, no. 6, Dec. 1981, pp. 1153-1160.
+		\bibitem{5}H.S. Hou and H.C. Andrews, "Cubic splines for image interpolation and digital filtering," IEEE Transaction Signal processing, vol. 26, no. 6, Dec. 1978, pp. 1153-1160.
+		\bibitem{6}X. Feng and P. Milanfar, "Multiscale principal components analysis for image local orientation estimation," Proceedings of the 36th Asilomar Conference on Signals, Systems and Computers, Pacific Grove, CA, November 2002. 5
+		\bibitem{7}Zabih, R.; Woodfill, J. Non-parametric local transforms for computing visual correspondence. In: Computer Vision — ECCV '94. Lecture Notes in Computer Science, Vol. 801. Eklundh, J. O. Ed. Springer Berlin Heidelberg, 151–158, 1994.
 		\bibitem{8}T. Ojala, M. Pietikainen and T. Maenpaa, "Multiresolution gray-scale and rotation invariant texture classification with local binary patterns," in IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 24, no. 7, pp. 971-987, July 2002, doi: 10.1109/TPAMI.2002.1017623.
 		\bibitem{9}Z. Guo, L. Zhang and D. Zhang, "A Completed Modeling of Local Binary Pattern Operator for Texture Classification," in IEEE Transactions on Image Processing, vol. 19, no. 6, pp. 1657-1663, June 2010, doi: 10.1109/TIP.2010.2044957.
-		\bibitem{10} R. Keys, “Cubic convolution interpolation for digital image processing,” IEEE Trans. on Acoustics, Speech and Signal Proc., vol. 29, no. 6, pp. 1153–1160, 1981. 1
-		\bibitem{11}H. Hou and H. Andrews, “Cubic splines for image interpolation and digital filtering,” IEEE Trans. on Acoustics, Speech and Signal Proc., vol. 26, no. 6, pp. 508–517, 1978. 1
+		\bibitem{10} R. Keys, "Cubic convolution interpolation for digital image processing," IEEE Trans. on Acoustics, Speech and Signal Proc., vol. 29, no. 6, pp. 1153–1160, 1981. 1
+		\bibitem{11}H. Hou and H. Andrews, "Cubic splines for image interpolation and digital filtering," IEEE Trans. on Acoustics, Speech and Signal Proc., vol. 26, no. 6, pp. 508–517, 1978. 1
 		\bibitem{12}Marr D, Hildreth E. Theroy of edge detection. Proc. of the Royal Society of London. Series B. Biological Sciences, 1980,207(1167): 187-217.
 		\bibitem{13}Ojala, T., Pietikäinen, M. and Harwood, D. (1996), A Comparative Study of Texture Measures with Classification Based on Feature Distributions. Pattern Recognition 19(3):51-59.
 	\end{thebibliography}
