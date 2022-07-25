@@ -31,7 +31,7 @@
 %配置纸张边缘
 \geometry{left=2.54cm,right=2.54cm,top=3.18cm,bottom=3.18cm}
 
-\title{{\Huge{\textbf{实现函数说明文档}}}\normalsize{\\——第六届全国大学生集成电路创新创业大赛景嘉微杯初赛提交文档}}
+\title{{\Huge{\textbf{实现函数说明文档}}}\normalsize{\\——第六届全国大学生集成电路创新创业大赛景嘉微杯分赛区决赛提交文档}}
 \author{队名：虹ヶ咲学园芯片设计同好会\\ 成员：黄金源\space邓立唯\space林明锋}
 \date{\today}
 \linespread{1.5}
@@ -48,9 +48,10 @@
 		\Huge\textbf{前言}
 	\end{center}~\
 
-本文档（ 函数现函数说明文档）仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛初赛提交文档供评委评分使用。
+本文档（函数现函数说明文档）仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛分赛区决赛提交文档供评委评分使用。
 	~\\
 	\begin{flushright}
+		\includegraphics[width=0.25\linewidth]{pic/logo}\\
 		\begin{tabular}{c}
 			虹ヶ咲学园芯片设计同好会\\
 			\today
@@ -176,14 +177,24 @@ void bicubic_interp_fixed(Bitmap* bitmap, Bitmap** pOutput);
 		\textbf{作用：}\par 对输入图像进行双三次插值，提高图像分辨率\\
 		双三次插值内部实现具体可参考文档 \href{./ref/APV21B_Implemented_Functions.pdf}{APV21B-Implemented Functions}。
 	
-	\item \textbf{上采样——多线程实现}
+	\item \textbf{上采样——单通道实现}
 		\begin{lstlisting}[numbers=none]
-void upsampling_pthread_x16(ImageMat* src, ImageMat** dst, qint16_t** weight);			
+void upsampling(ImageMat* src, ImageMat** dst, qint16_t** weight, uint32_t num_instance);			
 		\end{lstlisting}
-		\textbf{参数:} \par src: 要进行采样的图像 \par dst: 上采样后得到的图像\par weight: 带有量化位数的权重\par
+		\textbf{参数:} \par src: 要进行质量增强的图像 \par dst: 质量增强后的图像\par weight: 带有量化位数的权重\par num\_instance: 需要运行的线程数
 		\textbf{返回值：}\par 无返回值\\
-		\textbf{作用：}\par 对输入图像进行双三次插值，提高图像分辨率\\
-		\textbf{说明：}\par 在本次设计中，需要先根据patch\_edge进行图像分类，再将图像的patch 和 patch\_edge 一一对应，执行相应计算。本次设计中，需要处理4k分辨率图像，采用顺序执行的方式非常耗费时间，因此该函数采用了并行计算的方式，先将待处理图像分为4×4共计16个部分，创建16个线程并行计算，等待16个线程返回后再执行下一步计算，大大提高了运行速率。
+		\textbf{作用：}\par 对输入图像进行纹理分类并进行锐化操作，提高图像质量\\
+		\textbf{说明：}\par 在本次设计中，需要先根据patch\_edge进行图像分类，再将图像的patch 和 patch\_edge 一一对应，执行相应计算。本次设计中，需要处理 4k 分辨率图像，采用顺序执行的方式非常耗费时间，因此该函数采用了并行计算的方式，先将待处理图像分为 num\_instance 个部分，每个部分创建一个对应的线程进行并行计算，等待所有线程返回后再执行下一步计算，大大提高了运行速率。
+		
+		\item \textbf{上采样——RGB通道实现}
+			\begin{lstlisting}[numbers=none]
+void upsampling_rgb(ImageMat* src, ImageMat** dst, qint16_t** weight, uint32_t num_instance, ImageMat* src_r, ImageMat* src_g, ImageMat* src_b, ImageMat** dst_r, ImageMat** dst_g, ImageMat** dst_b);
+			\end{lstlisting}
+	
+			\textbf{参数:} \par src: 要进行纹理分类的灰度图像 \par dst: 质量增强后的图像\par weight: 带有量化位数的权重\par num\_instance: 需要运行的线程数 \\ src\_r: 需要进行质量提升的R通道图像 \\ src\_g: 需要进行质量提升的G通道图像 \\ src\_b: 需要进行质量提升的B通道图像 \\ dst\_r: 质量增强后的R通道图像 \\ dst\_g: 质量增强后的G通道图像 \\ dst\_b: 质量增强后的B通道图像\\
+			\textbf{返回值：}\par 无返回值\\
+			\textbf{作用：}\par 对输入图像进行纹理分类并进行锐化操作，提高图像质量\\
+			\textbf{说明：}\par 该函数与上一函数不同，对三个通道同时继续了锐化操作，进而获得更好的整体图像质量。
 
 		
 	\end{enumerate}
@@ -237,6 +248,33 @@ void ImageMatYUVtoRGB(ImageMat* mat);
 				\textbf{参数:} \par mat: ImageMat类型的结构体指针，用于存储图像的长度、宽度和数据信息\par 
 				\textbf{返回值：}\par 无返回值 \\
 				\textbf{作用：}\par  将YUV编码图像转换为RGB编码图像\\
+			\item \textbf{qImageMatRGBtoYUV}——将量化的RGB编码图片转换为YUV编码图片
+				\begin{lstlisting}[numbers=none]
+void qImageMatRGBtoYUV(qImageMat* qmat_r, qImageMat* qmat_g, qImageMat* qmat_b, qImageMat* qmat_y, qImageMat* qmat_u, qImageMat* qmat_v);
+				\end{lstlisting}
+				\textbf{参数：} \\
+					qmat\_r: qImageMat类型的结构体指针，用于存储量化图像R通道的长度、宽度和数据信息 \\ 
+					qmat\_g: qImageMat类型的结构体指针，用于存储量化图像G通道的长度、宽度和数据信息 \\ 
+					qmat\_b: qImageMat类型的结构体指针，用于存储量化图像B通道的长度、宽度和数据信息 \\ 
+					qmat\_y: qImageMat类型的结构体指针，用于存储量化图像Y通道的长度、宽度和数据信息 \\ 
+					qmat\_u: qImageMat类型的结构体指针，用于存储量化图像U通道的长度、宽度和数据信息 \\
+					qmat\_v: qImageMat类型的结构体指针，用于存储量化图像V通道的长度、宽度和数据信息 \\
+				\textbf{返回值:} \\ 无返回值 \\
+				\textbf{作用：} \\ 将量化的RGB编码图片转换为量化的YUV编码图像
+				
+			\item \textbf{qImageMatYUVtoRGB}——将量化的YUV编码图片转换为RGB编码图片
+				\begin{lstlisting}
+void qImageMatYUVtoRGB(qImageMat* qmat_y, qImageMat* qmat_u, qImageMat* qmat_v, qImageMat* qmat_r, qImageMat* qmat_g, qImageMat* qmat_b);
+				\end{lstlisting}
+				\textbf{参数：} \\
+					qmat\_y: qImageMat类型的结构体指针，用于存储量化图像Y通道的长度、宽度和数据信息 \\ 
+					qmat\_u: qImageMat类型的结构体指针，用于存储量化图像U通道的长度、宽度和数据信息 \\
+					qmat\_v: qImageMat类型的结构体指针，用于存储量化图像V通道的长度、宽度和数据信息 \\
+					qmat\_r: qImageMat类型的结构体指针，用于存储量化图像R通道的长度、宽度和数据信息 \\ 
+					qmat\_g: qImageMat类型的结构体指针，用于存储量化图像G通道的长度、宽度和数据信息 \\ 
+					qmat\_b: qImageMat类型的结构体指针，用于存储量化图像B通道的长度、宽度和数据信息 \\ 
+				\textbf{返回值:} \\ 无返回值 \\
+				\textbf{作用：} \\ 将量化的YUV编码图片转换为量化的RGB编码图像
 			
 			
 			\item \textbf{ImageMatRGBtoYUV}——提取YUV编码格式中Y通道数据
