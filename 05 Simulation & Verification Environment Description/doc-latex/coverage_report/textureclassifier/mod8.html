@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="<username>"> <meta name="GENERATOR" content="urg/version [en] (platform name) [urg]">
+<title>Unified Coverage Report :: Module :: \XPM.xpm_fifo_rst </title>
+<link type="text/css" rel="stylesheet" href="css/.urg.css">
+<link type="text/css" rel="stylesheet" href="css/.layout.css">
+<link type="text/css" rel="stylesheet" href="css/.breadcrumb.css">
+<script type="text/javascript" src="js/.jquery.js"></script>
+<script type="text/javascript" src="js/.jquery-ui.js"></script>
+<script type="text/javascript" src="js/.sortable.js"></script>
+<script type="text/javascript" src="js/.layout.js"></script>
+<script type="text/javascript" src="js/.breadcrumb.js"></script>
+<script type="text/javascript">
+var layout, westLayout, centerLayout;
+$(document).ready(function () {
+  if ($("#north-bread-crumb")) {
+    $("#north-bread-crumb").jBreadCrumb({easing:'swing'})
+  }
+  layout = $("body").layout({ 
+    resizable: true,
+    spacing_open: 4,
+    spacing_closed: 4,
+    north: {
+      size: 76
+    },
+    south: {
+      size: 45,
+      initClosed: true
+    },
+    west: {
+      size: 500,
+      resizable: true,
+      initClosed: false
+    }
+  });
+  centerLayout = $('div.ui-layout-center').layout({
+    north__paneSelector: ".ui-layout-center-inner-north",
+    center__paneSelector: ".ui-layout-center-inner-center", 
+    north__size: 50,
+    spacing_open: 4,
+    spacing_closed: 4
+  });
+});
+</script>
+</head>
+<body onLoad="initPage();"><div class="ui-layout-north">
+<div class="logo"></div>
+<center class="pagetitle">Module Definition</center>
+<div align="center"><a href="dashboard.html" ><b>dashboard</b></a> | <a href="hierarchy.html" ><b>hierarchy</b></a> | <a href="modlist.html" ><b>modlist</b></a> | groups | <a href="tests.html" ><b>tests</b></a> | asserts</div>
+
+</div>
+<div class="ui-layout-west">
+<div name='tag_\XPM.xpm_fifo_rst '>
+<div class=modhdr>
+<br clear=all>
+<span class=titlename>Module : <a href="#"  onclick="showContent('tag_\\XPM.xpm_fifo_rst ')">\XPM.xpm_fifo_rst </a></span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<span class=repname>Source File(s) : </span>
+<br clear=all>
+<a href="javascript:void(0);"  onclick="openSrcFile('/opt/xilinx/Vivado/2021.2/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv')">/opt/xilinx/Vivado/2021.2/data/ip/xpm/xpm_fifo/hdl/xpm_fifo.sv</a><br clear=all>
+<br clear=all>
+<span class=repname>Module self-instances :</span>
+<br clear=all>
+<table align=left class="sortable">
+<tr class="sortablehead">
+<td class="alfsrt">NAME</td><td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="wht cl wordwrap"><a href="mod8.html#inst_tag_41"  onclick="showContent('inst_tag_41')">TextureClassifierTop.cacheLine.lineBuffer_0.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></td>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_41_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_41_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr><tr>
+<td class="wht cl wordwrap"><a href="mod8.html#inst_tag_42"  onclick="showContent('inst_tag_42')">TextureClassifierTop.cacheLine.lineBuffer_1.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></td>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_42_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_42_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr><tr>
+<td class="wht cl wordwrap"><a href="mod8.html#inst_tag_43"  onclick="showContent('inst_tag_43')">TextureClassifierTop.cacheLine.lineBuffer_2.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></td>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_43_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_43_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr><tr>
+<td class="wht cl wordwrap"><a href="mod8.html#inst_tag_44"  onclick="showContent('inst_tag_44')">TextureClassifierTop.cacheLine.lineBuffer_3.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></td>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_44_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_44_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr><tr>
+<td class="wht cl wordwrap"><a href="mod8.html#inst_tag_45"  onclick="showContent('inst_tag_45')">TextureClassifierTop.cacheLine.lineBuffer_4.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></td>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_45_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_45_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr></table></div>
+</div>
+<br clear=all>
+<div name='inst_tag_41'>
+<hr>
+<a name="inst_tag_41"></a>
+<div class=modhdr>
+<br clear=all>
+<span class=titlename>Module Instance : <a href="hierarchy.html#tag_urg_inst_41" >TextureClassifierTop.cacheLine.lineBuffer_0.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></span>
+<br clear=all>
+<br clear=all>
+<span class=repname>Instance :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_41_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_41_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Instance's subtree :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt">100.00</td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"> 84.62</td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Parent : </span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td><td class="alfsrt">NAME</td></tr><tr>
+<td class="s7 cl rt"> 70.13</td>
+<td class="s6 cl rt"> 61.97</td>
+<td class="s8 cl rt"> 83.33</td>
+<td class="s6 cl rt"> 65.09</td>
+<td class="wht cl rt"></td>
+<td><a href="mod15.html#inst_tag_88" >xpm_fifo_base_inst</a></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Subtrees :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td class="alfsrt">NAME</td><td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td colspan=6>no children</td>
+</tr></table><br clear=all>
+</div>
+</div>
+<div name='inst_tag_42'>
+<hr>
+<a name="inst_tag_42"></a>
+<div class=modhdr>
+<br clear=all>
+<span class=titlename>Module Instance : <a href="hierarchy.html#tag_urg_inst_42" >TextureClassifierTop.cacheLine.lineBuffer_1.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></span>
+<br clear=all>
+<br clear=all>
+<span class=repname>Instance :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_42_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_42_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Instance's subtree :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt">100.00</td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"> 84.62</td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Parent : </span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td><td class="alfsrt">NAME</td></tr><tr>
+<td class="s7 cl rt"> 70.23</td>
+<td class="s6 cl rt"> 61.97</td>
+<td class="s8 cl rt"> 83.33</td>
+<td class="s6 cl rt"> 65.37</td>
+<td class="wht cl rt"></td>
+<td><a href="mod15.html#inst_tag_89" >xpm_fifo_base_inst</a></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Subtrees :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td class="alfsrt">NAME</td><td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td colspan=6>no children</td>
+</tr></table><br clear=all>
+</div>
+</div>
+<div name='inst_tag_43'>
+<hr>
+<a name="inst_tag_43"></a>
+<div class=modhdr>
+<br clear=all>
+<span class=titlename>Module Instance : <a href="hierarchy.html#tag_urg_inst_43" >TextureClassifierTop.cacheLine.lineBuffer_2.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></span>
+<br clear=all>
+<br clear=all>
+<span class=repname>Instance :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_43_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_43_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Instance's subtree :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt">100.00</td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"> 84.62</td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Parent : </span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td><td class="alfsrt">NAME</td></tr><tr>
+<td class="s7 cl rt"> 70.32</td>
+<td class="s6 cl rt"> 61.97</td>
+<td class="s8 cl rt"> 83.33</td>
+<td class="s6 cl rt"> 65.66</td>
+<td class="wht cl rt"></td>
+<td><a href="mod15.html#inst_tag_90" >xpm_fifo_base_inst</a></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Subtrees :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td class="alfsrt">NAME</td><td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td colspan=6>no children</td>
+</tr></table><br clear=all>
+</div>
+</div>
+<div name='inst_tag_44'>
+<hr>
+<a name="inst_tag_44"></a>
+<div class=modhdr>
+<br clear=all>
+<span class=titlename>Module Instance : <a href="hierarchy.html#tag_urg_inst_44" >TextureClassifierTop.cacheLine.lineBuffer_3.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></span>
+<br clear=all>
+<br clear=all>
+<span class=repname>Instance :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_44_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_44_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Instance's subtree :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt">100.00</td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"> 84.62</td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Parent : </span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td><td class="alfsrt">NAME</td></tr><tr>
+<td class="s7 cl rt"> 70.13</td>
+<td class="s6 cl rt"> 61.97</td>
+<td class="s8 cl rt"> 83.33</td>
+<td class="s6 cl rt"> 65.09</td>
+<td class="wht cl rt"></td>
+<td><a href="mod15.html#inst_tag_91" >xpm_fifo_base_inst</a></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Subtrees :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td class="alfsrt">NAME</td><td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td colspan=6>no children</td>
+</tr></table><br clear=all>
+</div>
+</div>
+<div name='inst_tag_45'>
+<hr>
+<a name="inst_tag_45"></a>
+<div class=modhdr>
+<br clear=all>
+<span class=titlename>Module Instance : <a href="hierarchy.html#tag_urg_inst_45" >TextureClassifierTop.cacheLine.lineBuffer_4.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></span>
+<br clear=all>
+<br clear=all>
+<span class=repname>Instance :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#inst_tag_45_Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#inst_tag_45_Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Instance's subtree :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt">100.00</td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"> 84.62</td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Parent : </span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td><td class="alfsrt">NAME</td></tr><tr>
+<td class="s7 cl rt"> 70.23</td>
+<td class="s6 cl rt"> 61.97</td>
+<td class="s8 cl rt"> 83.33</td>
+<td class="s6 cl rt"> 65.37</td>
+<td class="wht cl rt"></td>
+<td><a href="mod15.html#inst_tag_92" >xpm_fifo_base_inst</a></td>
+</tr></table><br clear=all>
+<br clear=all>
+<span class=repname>Subtrees :</span>
+<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td class="alfsrt">NAME</td><td>SCORE</td><td>LINE</td><td>COND</td><td>TOGGLE</td><td>FSM</td></tr><tr>
+<td colspan=6>no children</td>
+</tr></table><br clear=all>
+</div>
+</div>
+</div>
+<div class="ui-layout-center">
+<div class="ui-layout-center-inner-center">
+<div name='tag_\XPM.xpm_fifo_rst '>
+<a name="Line"></a>
+Line Coverage for Module : <a href="mod8.html" >\XPM.xpm_fifo_rst </a><br clear=all>
+<table class="noborder">
+<col width="122">
+<col span="4" width="82">
+<tr><th></th><th>Line No.</th><th>Total</th><th>Covered</th><th>Percent</th></tr>
+<tr class="s10"><td class="lf">TOTAL</td><td></td><td>4</td><td>4</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1640</td><td>1</td><td>1</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1663</td><td>3</td><td>3</td><td>100.00</td></tr>
+</table>
+<pre class="code"><br clear=all>
+1639                       always @ (posedge wr_clk) begin
+1640       1/1               power_on_rst &lt;= {power_on_rst[0], 1'b0};
+1641                       end
+1642                       assign rst_i = power_on_rst[1] | rst;
+1643                    
+1644                      // Write and read reset generation for common clock FIFO
+1645                       if (COMMON_CLOCK == 1) begin : gen_rst_cc
+1646                        reg [2:0] fifo_wr_rst_cc = 3'b00;
+1647                        assign wr_rst        = fifo_wr_rst_cc[2];
+1648                        assign rd_rst        = fifo_wr_rst_cc[2];
+1649                        assign rd_rst_busy   = fifo_wr_rst_cc[2];
+1650                        assign wr_rst_busy   = fifo_wr_rst_cc[2];
+1651                    
+1652                      // synthesis translate_off
+1653                        `ifndef DISABLE_XPM_ASSERTIONS  
+1654                        if (SIM_ASSERT_CHK == 1) begin: assert_rst
+1655                          always @ (posedge wr_clk) begin
+1656                            assert (!$isunknown(rst)) else $warning (&quot;Input port 'rst' has unknown value 'X' or 'Z' at %0t. This may cause the outputs of FIFO to be 'X' or 'Z' in simulation. Ensure 'rst' has a valid value ('0' or '1')&quot;,$time);
+1657                          end
+1658                        end : assert_rst
+1659                      `endif
+1660                      // synthesis translate_on
+1661                    
+1662                        always @ (posedge wr_clk) begin
+1663       1/1                if (rst_i) begin
+1664       1/1                  fifo_wr_rst_cc    &lt;= 3'h7;
+1665                          end else begin
+1666       1/1            	fifo_wr_rst_cc   &lt;= {fifo_wr_rst_cc[1:0],1'b0};
+</pre>
+<hr>
+<a name="Toggle"></a>
+Toggle Coverage for Module : <a href="mod8.html" >\XPM.xpm_fifo_rst </a><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80>Total</th><th nowrap width=80>Covered</th><th nowrap width=80>Percent</th></tr><tr class="s7">
+<td>Totals</td>
+<td class="rt">10</td>
+<td class="rt">7</td>
+<td class="rt">70.00 </td>
+</tr><tr class="s8">
+<td>Total Bits</td>
+<td class="rt">26</td>
+<td class="rt">22</td>
+<td class="rt">84.62 </td>
+</tr><tr class="s6">
+<td nowrap>Total Bits 0->1</td>
+<td class="rt">13</td>
+<td class="rt">9</td>
+<td class="rt">69.23 </td>
+</tr><tr class="s10">
+<td nowrap>Total Bits 1->0</td>
+<td class="rt">13</td>
+<td class="rt">13</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s8">
+<td>Ports</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s9">
+<td>Port Bits</td>
+<td class="rt">14</td>
+<td class="rt">13</td>
+<td class="rt">92.86 </td>
+</tr><tr class="s8">
+<td nowrap>Port Bits 0->1</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s10">
+<td nowrap>Port Bits 1->0</td>
+<td class="rt">7</td>
+<td class="rt">7</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s3">
+<td>Signals</td>
+<td class="rt">3</td>
+<td class="rt">1</td>
+<td class="rt">33.33 </td>
+</tr><tr class="s7">
+<td>Signal Bits</td>
+<td class="rt">12</td>
+<td class="rt">9</td>
+<td class="rt">75.00 </td>
+</tr><tr class="s5">
+<td nowrap>Signal Bits 0->1</td>
+<td class="rt">6</td>
+<td class="rt">3</td>
+<td class="rt">50.00 </td>
+</tr><tr class="s10">
+<td nowrap>Signal Bits 1->0</td>
+<td class="rt">6</td>
+<td class="rt">6</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Port Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td><td class="alfsrt">Direction</td></tr><tr>
+<td>rst</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>rd_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>wr_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Signal Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td></tr><tr>
+<td>power_on_rst[1:0]</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>rst_i</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>gen_rst_cc.fifo_wr_rst_cc[2:0]</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+</tr></table><br clear=all>
+</div>
+<div name='inst_tag_41'>
+<a name="inst_tag_41_Line"></a>
+<b>Line Coverage for Instance : <a href="mod8.html#inst_tag_41" >TextureClassifierTop.cacheLine.lineBuffer_0.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table class="noborder">
+<col width="122">
+<col span="4" width="82">
+<tr><th></th><th>Line No.</th><th>Total</th><th>Covered</th><th>Percent</th></tr>
+<tr class="s10"><td class="lf">TOTAL</td><td></td><td>4</td><td>4</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1640</td><td>1</td><td>1</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1663</td><td>3</td><td>3</td><td>100.00</td></tr>
+</table>
+<pre class="code"><br clear=all>
+1639                       always @ (posedge wr_clk) begin
+1640       1/1               power_on_rst &lt;= {power_on_rst[0], 1'b0};
+1641                       end
+1642                       assign rst_i = power_on_rst[1] | rst;
+1643                    
+1644                      // Write and read reset generation for common clock FIFO
+1645                       if (COMMON_CLOCK == 1) begin : gen_rst_cc
+1646                        reg [2:0] fifo_wr_rst_cc = 3'b00;
+1647                        assign wr_rst        = fifo_wr_rst_cc[2];
+1648                        assign rd_rst        = fifo_wr_rst_cc[2];
+1649                        assign rd_rst_busy   = fifo_wr_rst_cc[2];
+1650                        assign wr_rst_busy   = fifo_wr_rst_cc[2];
+1651                    
+1652                      // synthesis translate_off
+1653                        `ifndef DISABLE_XPM_ASSERTIONS  
+1654                        if (SIM_ASSERT_CHK == 1) begin: assert_rst
+1655                          always @ (posedge wr_clk) begin
+1656                            assert (!$isunknown(rst)) else $warning (&quot;Input port 'rst' has unknown value 'X' or 'Z' at %0t. This may cause the outputs of FIFO to be 'X' or 'Z' in simulation. Ensure 'rst' has a valid value ('0' or '1')&quot;,$time);
+1657                          end
+1658                        end : assert_rst
+1659                      `endif
+1660                      // synthesis translate_on
+1661                    
+1662                        always @ (posedge wr_clk) begin
+1663       1/1                if (rst_i) begin
+1664       1/1                  fifo_wr_rst_cc    &lt;= 3'h7;
+1665                          end else begin
+1666       1/1            	fifo_wr_rst_cc   &lt;= {fifo_wr_rst_cc[1:0],1'b0};
+</pre>
+<hr>
+<a name="inst_tag_41_Toggle"></a>
+<b>Toggle Coverage for Instance : <a href="mod8.html#inst_tag_41" >TextureClassifierTop.cacheLine.lineBuffer_0.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80>Total</th><th nowrap width=80>Covered</th><th nowrap width=80>Percent</th></tr><tr class="s7">
+<td>Totals</td>
+<td class="rt">10</td>
+<td class="rt">7</td>
+<td class="rt">70.00 </td>
+</tr><tr class="s8">
+<td>Total Bits</td>
+<td class="rt">26</td>
+<td class="rt">22</td>
+<td class="rt">84.62 </td>
+</tr><tr class="s6">
+<td nowrap>Total Bits 0->1</td>
+<td class="rt">13</td>
+<td class="rt">9</td>
+<td class="rt">69.23 </td>
+</tr><tr class="s10">
+<td nowrap>Total Bits 1->0</td>
+<td class="rt">13</td>
+<td class="rt">13</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s8">
+<td>Ports</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s9">
+<td>Port Bits</td>
+<td class="rt">14</td>
+<td class="rt">13</td>
+<td class="rt">92.86 </td>
+</tr><tr class="s8">
+<td nowrap>Port Bits 0->1</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s10">
+<td nowrap>Port Bits 1->0</td>
+<td class="rt">7</td>
+<td class="rt">7</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s3">
+<td>Signals</td>
+<td class="rt">3</td>
+<td class="rt">1</td>
+<td class="rt">33.33 </td>
+</tr><tr class="s7">
+<td>Signal Bits</td>
+<td class="rt">12</td>
+<td class="rt">9</td>
+<td class="rt">75.00 </td>
+</tr><tr class="s5">
+<td nowrap>Signal Bits 0->1</td>
+<td class="rt">6</td>
+<td class="rt">3</td>
+<td class="rt">50.00 </td>
+</tr><tr class="s10">
+<td nowrap>Signal Bits 1->0</td>
+<td class="rt">6</td>
+<td class="rt">6</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Port Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td><td class="alfsrt">Direction</td></tr><tr>
+<td>rst</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>rd_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>wr_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Signal Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td></tr><tr>
+<td>power_on_rst[1:0]</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>rst_i</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>gen_rst_cc.fifo_wr_rst_cc[2:0]</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+</tr></table><br clear=all>
+</div>
+<div name='inst_tag_42'>
+<a name="inst_tag_42_Line"></a>
+<b>Line Coverage for Instance : <a href="mod8.html#inst_tag_42" >TextureClassifierTop.cacheLine.lineBuffer_1.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table class="noborder">
+<col width="122">
+<col span="4" width="82">
+<tr><th></th><th>Line No.</th><th>Total</th><th>Covered</th><th>Percent</th></tr>
+<tr class="s10"><td class="lf">TOTAL</td><td></td><td>4</td><td>4</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1640</td><td>1</td><td>1</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1663</td><td>3</td><td>3</td><td>100.00</td></tr>
+</table>
+<pre class="code"><br clear=all>
+1639                       always @ (posedge wr_clk) begin
+1640       1/1               power_on_rst &lt;= {power_on_rst[0], 1'b0};
+1641                       end
+1642                       assign rst_i = power_on_rst[1] | rst;
+1643                    
+1644                      // Write and read reset generation for common clock FIFO
+1645                       if (COMMON_CLOCK == 1) begin : gen_rst_cc
+1646                        reg [2:0] fifo_wr_rst_cc = 3'b00;
+1647                        assign wr_rst        = fifo_wr_rst_cc[2];
+1648                        assign rd_rst        = fifo_wr_rst_cc[2];
+1649                        assign rd_rst_busy   = fifo_wr_rst_cc[2];
+1650                        assign wr_rst_busy   = fifo_wr_rst_cc[2];
+1651                    
+1652                      // synthesis translate_off
+1653                        `ifndef DISABLE_XPM_ASSERTIONS  
+1654                        if (SIM_ASSERT_CHK == 1) begin: assert_rst
+1655                          always @ (posedge wr_clk) begin
+1656                            assert (!$isunknown(rst)) else $warning (&quot;Input port 'rst' has unknown value 'X' or 'Z' at %0t. This may cause the outputs of FIFO to be 'X' or 'Z' in simulation. Ensure 'rst' has a valid value ('0' or '1')&quot;,$time);
+1657                          end
+1658                        end : assert_rst
+1659                      `endif
+1660                      // synthesis translate_on
+1661                    
+1662                        always @ (posedge wr_clk) begin
+1663       1/1                if (rst_i) begin
+1664       1/1                  fifo_wr_rst_cc    &lt;= 3'h7;
+1665                          end else begin
+1666       1/1            	fifo_wr_rst_cc   &lt;= {fifo_wr_rst_cc[1:0],1'b0};
+</pre>
+<hr>
+<a name="inst_tag_42_Toggle"></a>
+<b>Toggle Coverage for Instance : <a href="mod8.html#inst_tag_42" >TextureClassifierTop.cacheLine.lineBuffer_1.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80>Total</th><th nowrap width=80>Covered</th><th nowrap width=80>Percent</th></tr><tr class="s7">
+<td>Totals</td>
+<td class="rt">10</td>
+<td class="rt">7</td>
+<td class="rt">70.00 </td>
+</tr><tr class="s8">
+<td>Total Bits</td>
+<td class="rt">26</td>
+<td class="rt">22</td>
+<td class="rt">84.62 </td>
+</tr><tr class="s6">
+<td nowrap>Total Bits 0->1</td>
+<td class="rt">13</td>
+<td class="rt">9</td>
+<td class="rt">69.23 </td>
+</tr><tr class="s10">
+<td nowrap>Total Bits 1->0</td>
+<td class="rt">13</td>
+<td class="rt">13</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s8">
+<td>Ports</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s9">
+<td>Port Bits</td>
+<td class="rt">14</td>
+<td class="rt">13</td>
+<td class="rt">92.86 </td>
+</tr><tr class="s8">
+<td nowrap>Port Bits 0->1</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s10">
+<td nowrap>Port Bits 1->0</td>
+<td class="rt">7</td>
+<td class="rt">7</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s3">
+<td>Signals</td>
+<td class="rt">3</td>
+<td class="rt">1</td>
+<td class="rt">33.33 </td>
+</tr><tr class="s7">
+<td>Signal Bits</td>
+<td class="rt">12</td>
+<td class="rt">9</td>
+<td class="rt">75.00 </td>
+</tr><tr class="s5">
+<td nowrap>Signal Bits 0->1</td>
+<td class="rt">6</td>
+<td class="rt">3</td>
+<td class="rt">50.00 </td>
+</tr><tr class="s10">
+<td nowrap>Signal Bits 1->0</td>
+<td class="rt">6</td>
+<td class="rt">6</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Port Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td><td class="alfsrt">Direction</td></tr><tr>
+<td>rst</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>rd_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>wr_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Signal Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td></tr><tr>
+<td>power_on_rst[1:0]</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>rst_i</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>gen_rst_cc.fifo_wr_rst_cc[2:0]</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+</tr></table><br clear=all>
+</div>
+<div name='inst_tag_43'>
+<a name="inst_tag_43_Line"></a>
+<b>Line Coverage for Instance : <a href="mod8.html#inst_tag_43" >TextureClassifierTop.cacheLine.lineBuffer_2.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table class="noborder">
+<col width="122">
+<col span="4" width="82">
+<tr><th></th><th>Line No.</th><th>Total</th><th>Covered</th><th>Percent</th></tr>
+<tr class="s10"><td class="lf">TOTAL</td><td></td><td>4</td><td>4</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1640</td><td>1</td><td>1</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1663</td><td>3</td><td>3</td><td>100.00</td></tr>
+</table>
+<pre class="code"><br clear=all>
+1639                       always @ (posedge wr_clk) begin
+1640       1/1               power_on_rst &lt;= {power_on_rst[0], 1'b0};
+1641                       end
+1642                       assign rst_i = power_on_rst[1] | rst;
+1643                    
+1644                      // Write and read reset generation for common clock FIFO
+1645                       if (COMMON_CLOCK == 1) begin : gen_rst_cc
+1646                        reg [2:0] fifo_wr_rst_cc = 3'b00;
+1647                        assign wr_rst        = fifo_wr_rst_cc[2];
+1648                        assign rd_rst        = fifo_wr_rst_cc[2];
+1649                        assign rd_rst_busy   = fifo_wr_rst_cc[2];
+1650                        assign wr_rst_busy   = fifo_wr_rst_cc[2];
+1651                    
+1652                      // synthesis translate_off
+1653                        `ifndef DISABLE_XPM_ASSERTIONS  
+1654                        if (SIM_ASSERT_CHK == 1) begin: assert_rst
+1655                          always @ (posedge wr_clk) begin
+1656                            assert (!$isunknown(rst)) else $warning (&quot;Input port 'rst' has unknown value 'X' or 'Z' at %0t. This may cause the outputs of FIFO to be 'X' or 'Z' in simulation. Ensure 'rst' has a valid value ('0' or '1')&quot;,$time);
+1657                          end
+1658                        end : assert_rst
+1659                      `endif
+1660                      // synthesis translate_on
+1661                    
+1662                        always @ (posedge wr_clk) begin
+1663       1/1                if (rst_i) begin
+1664       1/1                  fifo_wr_rst_cc    &lt;= 3'h7;
+1665                          end else begin
+1666       1/1            	fifo_wr_rst_cc   &lt;= {fifo_wr_rst_cc[1:0],1'b0};
+</pre>
+<hr>
+<a name="inst_tag_43_Toggle"></a>
+<b>Toggle Coverage for Instance : <a href="mod8.html#inst_tag_43" >TextureClassifierTop.cacheLine.lineBuffer_2.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80>Total</th><th nowrap width=80>Covered</th><th nowrap width=80>Percent</th></tr><tr class="s7">
+<td>Totals</td>
+<td class="rt">10</td>
+<td class="rt">7</td>
+<td class="rt">70.00 </td>
+</tr><tr class="s8">
+<td>Total Bits</td>
+<td class="rt">26</td>
+<td class="rt">22</td>
+<td class="rt">84.62 </td>
+</tr><tr class="s6">
+<td nowrap>Total Bits 0->1</td>
+<td class="rt">13</td>
+<td class="rt">9</td>
+<td class="rt">69.23 </td>
+</tr><tr class="s10">
+<td nowrap>Total Bits 1->0</td>
+<td class="rt">13</td>
+<td class="rt">13</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s8">
+<td>Ports</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s9">
+<td>Port Bits</td>
+<td class="rt">14</td>
+<td class="rt">13</td>
+<td class="rt">92.86 </td>
+</tr><tr class="s8">
+<td nowrap>Port Bits 0->1</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s10">
+<td nowrap>Port Bits 1->0</td>
+<td class="rt">7</td>
+<td class="rt">7</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s3">
+<td>Signals</td>
+<td class="rt">3</td>
+<td class="rt">1</td>
+<td class="rt">33.33 </td>
+</tr><tr class="s7">
+<td>Signal Bits</td>
+<td class="rt">12</td>
+<td class="rt">9</td>
+<td class="rt">75.00 </td>
+</tr><tr class="s5">
+<td nowrap>Signal Bits 0->1</td>
+<td class="rt">6</td>
+<td class="rt">3</td>
+<td class="rt">50.00 </td>
+</tr><tr class="s10">
+<td nowrap>Signal Bits 1->0</td>
+<td class="rt">6</td>
+<td class="rt">6</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Port Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td><td class="alfsrt">Direction</td></tr><tr>
+<td>rst</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>rd_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>wr_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Signal Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td></tr><tr>
+<td>power_on_rst[1:0]</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>rst_i</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>gen_rst_cc.fifo_wr_rst_cc[2:0]</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+</tr></table><br clear=all>
+</div>
+<div name='inst_tag_44'>
+<a name="inst_tag_44_Line"></a>
+<b>Line Coverage for Instance : <a href="mod8.html#inst_tag_44" >TextureClassifierTop.cacheLine.lineBuffer_3.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table class="noborder">
+<col width="122">
+<col span="4" width="82">
+<tr><th></th><th>Line No.</th><th>Total</th><th>Covered</th><th>Percent</th></tr>
+<tr class="s10"><td class="lf">TOTAL</td><td></td><td>4</td><td>4</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1640</td><td>1</td><td>1</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1663</td><td>3</td><td>3</td><td>100.00</td></tr>
+</table>
+<pre class="code"><br clear=all>
+1639                       always @ (posedge wr_clk) begin
+1640       1/1               power_on_rst &lt;= {power_on_rst[0], 1'b0};
+1641                       end
+1642                       assign rst_i = power_on_rst[1] | rst;
+1643                    
+1644                      // Write and read reset generation for common clock FIFO
+1645                       if (COMMON_CLOCK == 1) begin : gen_rst_cc
+1646                        reg [2:0] fifo_wr_rst_cc = 3'b00;
+1647                        assign wr_rst        = fifo_wr_rst_cc[2];
+1648                        assign rd_rst        = fifo_wr_rst_cc[2];
+1649                        assign rd_rst_busy   = fifo_wr_rst_cc[2];
+1650                        assign wr_rst_busy   = fifo_wr_rst_cc[2];
+1651                    
+1652                      // synthesis translate_off
+1653                        `ifndef DISABLE_XPM_ASSERTIONS  
+1654                        if (SIM_ASSERT_CHK == 1) begin: assert_rst
+1655                          always @ (posedge wr_clk) begin
+1656                            assert (!$isunknown(rst)) else $warning (&quot;Input port 'rst' has unknown value 'X' or 'Z' at %0t. This may cause the outputs of FIFO to be 'X' or 'Z' in simulation. Ensure 'rst' has a valid value ('0' or '1')&quot;,$time);
+1657                          end
+1658                        end : assert_rst
+1659                      `endif
+1660                      // synthesis translate_on
+1661                    
+1662                        always @ (posedge wr_clk) begin
+1663       1/1                if (rst_i) begin
+1664       1/1                  fifo_wr_rst_cc    &lt;= 3'h7;
+1665                          end else begin
+1666       1/1            	fifo_wr_rst_cc   &lt;= {fifo_wr_rst_cc[1:0],1'b0};
+</pre>
+<hr>
+<a name="inst_tag_44_Toggle"></a>
+<b>Toggle Coverage for Instance : <a href="mod8.html#inst_tag_44" >TextureClassifierTop.cacheLine.lineBuffer_3.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80>Total</th><th nowrap width=80>Covered</th><th nowrap width=80>Percent</th></tr><tr class="s7">
+<td>Totals</td>
+<td class="rt">10</td>
+<td class="rt">7</td>
+<td class="rt">70.00 </td>
+</tr><tr class="s8">
+<td>Total Bits</td>
+<td class="rt">26</td>
+<td class="rt">22</td>
+<td class="rt">84.62 </td>
+</tr><tr class="s6">
+<td nowrap>Total Bits 0->1</td>
+<td class="rt">13</td>
+<td class="rt">9</td>
+<td class="rt">69.23 </td>
+</tr><tr class="s10">
+<td nowrap>Total Bits 1->0</td>
+<td class="rt">13</td>
+<td class="rt">13</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s8">
+<td>Ports</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s9">
+<td>Port Bits</td>
+<td class="rt">14</td>
+<td class="rt">13</td>
+<td class="rt">92.86 </td>
+</tr><tr class="s8">
+<td nowrap>Port Bits 0->1</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s10">
+<td nowrap>Port Bits 1->0</td>
+<td class="rt">7</td>
+<td class="rt">7</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s3">
+<td>Signals</td>
+<td class="rt">3</td>
+<td class="rt">1</td>
+<td class="rt">33.33 </td>
+</tr><tr class="s7">
+<td>Signal Bits</td>
+<td class="rt">12</td>
+<td class="rt">9</td>
+<td class="rt">75.00 </td>
+</tr><tr class="s5">
+<td nowrap>Signal Bits 0->1</td>
+<td class="rt">6</td>
+<td class="rt">3</td>
+<td class="rt">50.00 </td>
+</tr><tr class="s10">
+<td nowrap>Signal Bits 1->0</td>
+<td class="rt">6</td>
+<td class="rt">6</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Port Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td><td class="alfsrt">Direction</td></tr><tr>
+<td>rst</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>rd_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>wr_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Signal Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td></tr><tr>
+<td>power_on_rst[1:0]</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>rst_i</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>gen_rst_cc.fifo_wr_rst_cc[2:0]</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+</tr></table><br clear=all>
+</div>
+<div name='inst_tag_45'>
+<a name="inst_tag_45_Line"></a>
+<b>Line Coverage for Instance : <a href="mod8.html#inst_tag_45" >TextureClassifierTop.cacheLine.lineBuffer_4.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table class="noborder">
+<col width="122">
+<col span="4" width="82">
+<tr><th></th><th>Line No.</th><th>Total</th><th>Covered</th><th>Percent</th></tr>
+<tr class="s10"><td class="lf">TOTAL</td><td></td><td>4</td><td>4</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1640</td><td>1</td><td>1</td><td>100.00</td></tr>
+<tr class="s10"><td class="lf">ALWAYS</td><td>1663</td><td>3</td><td>3</td><td>100.00</td></tr>
+</table>
+<pre class="code"><br clear=all>
+1639                       always @ (posedge wr_clk) begin
+1640       1/1               power_on_rst &lt;= {power_on_rst[0], 1'b0};
+1641                       end
+1642                       assign rst_i = power_on_rst[1] | rst;
+1643                    
+1644                      // Write and read reset generation for common clock FIFO
+1645                       if (COMMON_CLOCK == 1) begin : gen_rst_cc
+1646                        reg [2:0] fifo_wr_rst_cc = 3'b00;
+1647                        assign wr_rst        = fifo_wr_rst_cc[2];
+1648                        assign rd_rst        = fifo_wr_rst_cc[2];
+1649                        assign rd_rst_busy   = fifo_wr_rst_cc[2];
+1650                        assign wr_rst_busy   = fifo_wr_rst_cc[2];
+1651                    
+1652                      // synthesis translate_off
+1653                        `ifndef DISABLE_XPM_ASSERTIONS  
+1654                        if (SIM_ASSERT_CHK == 1) begin: assert_rst
+1655                          always @ (posedge wr_clk) begin
+1656                            assert (!$isunknown(rst)) else $warning (&quot;Input port 'rst' has unknown value 'X' or 'Z' at %0t. This may cause the outputs of FIFO to be 'X' or 'Z' in simulation. Ensure 'rst' has a valid value ('0' or '1')&quot;,$time);
+1657                          end
+1658                        end : assert_rst
+1659                      `endif
+1660                      // synthesis translate_on
+1661                    
+1662                        always @ (posedge wr_clk) begin
+1663       1/1                if (rst_i) begin
+1664       1/1                  fifo_wr_rst_cc    &lt;= 3'h7;
+1665                          end else begin
+1666       1/1            	fifo_wr_rst_cc   &lt;= {fifo_wr_rst_cc[1:0],1'b0};
+</pre>
+<hr>
+<a name="inst_tag_45_Toggle"></a>
+<b>Toggle Coverage for Instance : <a href="mod8.html#inst_tag_45" >TextureClassifierTop.cacheLine.lineBuffer_4.xpm_fifo_sync_inst.xpm_fifo_base_inst.xpm_fifo_rst_inst</a></b><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80>Total</th><th nowrap width=80>Covered</th><th nowrap width=80>Percent</th></tr><tr class="s7">
+<td>Totals</td>
+<td class="rt">10</td>
+<td class="rt">7</td>
+<td class="rt">70.00 </td>
+</tr><tr class="s8">
+<td>Total Bits</td>
+<td class="rt">26</td>
+<td class="rt">22</td>
+<td class="rt">84.62 </td>
+</tr><tr class="s6">
+<td nowrap>Total Bits 0->1</td>
+<td class="rt">13</td>
+<td class="rt">9</td>
+<td class="rt">69.23 </td>
+</tr><tr class="s10">
+<td nowrap>Total Bits 1->0</td>
+<td class="rt">13</td>
+<td class="rt">13</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s8">
+<td>Ports</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s9">
+<td>Port Bits</td>
+<td class="rt">14</td>
+<td class="rt">13</td>
+<td class="rt">92.86 </td>
+</tr><tr class="s8">
+<td nowrap>Port Bits 0->1</td>
+<td class="rt">7</td>
+<td class="rt">6</td>
+<td class="rt">85.71 </td>
+</tr><tr class="s10">
+<td nowrap>Port Bits 1->0</td>
+<td class="rt">7</td>
+<td class="rt">7</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="noborder">
+<tr>
+<th nowrap width=120></th><th nowrap width=80></th><th nowrap width=80></th><th nowrap width=80></th></tr><tr class="s3">
+<td>Signals</td>
+<td class="rt">3</td>
+<td class="rt">1</td>
+<td class="rt">33.33 </td>
+</tr><tr class="s7">
+<td>Signal Bits</td>
+<td class="rt">12</td>
+<td class="rt">9</td>
+<td class="rt">75.00 </td>
+</tr><tr class="s5">
+<td nowrap>Signal Bits 0->1</td>
+<td class="rt">6</td>
+<td class="rt">3</td>
+<td class="rt">50.00 </td>
+</tr><tr class="s10">
+<td nowrap>Signal Bits 1->0</td>
+<td class="rt">6</td>
+<td class="rt">6</td>
+<td class="rt">100.00</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Port Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td><td class="alfsrt">Direction</td></tr><tr>
+<td>rst</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>rd_clk</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>INPUT</td>
+</tr><tr>
+<td>wr_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>wr_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr><tr>
+<td>rd_rst_busy</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td>OUTPUT</td>
+</tr></table><br clear=all>
+<table align=left class="sortable noborder">
+<caption><b>Signal Details</b></caption>
+<tr class="sortablehead">
+<td class="alfsrt">Name</td><td class="alfsrt">Toggle</td><td class="alfsrt">Toggle 1->0</td><td class="alfsrt">Toggle 0->1</td></tr><tr>
+<td>power_on_rst[1:0]</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>rst_i</td>
+<td class="s3 cl">No</td>
+<td class="s9 cl">Yes</td>
+<td class="s3 cl">No</td>
+</tr><tr>
+<td>gen_rst_cc.fifo_wr_rst_cc[2:0]</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+<td class="s9 cl">Yes</td>
+</tr></table><br clear=all>
+</div>
+</div>
+<div class="ui-layout-center-inner-north">
+<div id="center-bread-crumb" class="breadCrumb module urg-margin-bottom">
+  <ul name="inst_tag_41">
+    <li>
+      <a href="#inst_tag_41_Line">Line</a>    </li>
+    <li>
+      <a href="#inst_tag_41_Toggle">Toggle</a>    </li>
+  </ul>
+  <ul name="inst_tag_42">
+    <li>
+      <a href="#inst_tag_42_Line">Line</a>    </li>
+    <li>
+      <a href="#inst_tag_42_Toggle">Toggle</a>    </li>
+  </ul>
+  <ul name="inst_tag_43">
+    <li>
+      <a href="#inst_tag_43_Line">Line</a>    </li>
+    <li>
+      <a href="#inst_tag_43_Toggle">Toggle</a>    </li>
+  </ul>
+  <ul name="inst_tag_44">
+    <li>
+      <a href="#inst_tag_44_Line">Line</a>    </li>
+    <li>
+      <a href="#inst_tag_44_Toggle">Toggle</a>    </li>
+  </ul>
+  <ul name="inst_tag_45">
+    <li>
+      <a href="#inst_tag_45_Line">Line</a>    </li>
+    <li>
+      <a href="#inst_tag_45_Toggle">Toggle</a>    </li>
+  </ul>
+  <ul name="tag_\XPM.xpm_fifo_rst ">
+    <li>
+      <a href="#Line">Line</a>    </li>
+    <li>
+      <a href="#Toggle">Toggle</a>    </li>
+  </ul>
+</div>
+</div>
+</div>
+<div class="ui-layout-south">
+<table align=center><tr><td class="s0 cl">0%</td>
+<td class="s1 cl">10%</td>
+<td class="s2 cl">20%</td>
+<td class="s3 cl">30%</td>
+<td class="s4 cl">40%</td>
+<td class="s5 cl">50%</td>
+<td class="s6 cl">60%</td>
+<td class="s7 cl">70%</td>
+<td class="s8 cl">80%</td>
+<td class="s9 cl">90%</td>
+<td class="s10 cl">100%</td></tr></table></div>
+</body>
+</html>

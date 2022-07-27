@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="<username>"> <meta name="GENERATOR" content="urg/version [en] (platform name) [urg]">
+<title>Unified Coverage Report :: Module List</title>
+<link type="text/css" rel="stylesheet" href="css/.urg.css">
+<link type="text/css" rel="stylesheet" href="css/.treetable.css">
+<link type="text/css" rel="stylesheet" href="css/.layout.css">
+<script type="text/javascript" src="js/.jquery.js"></script>
+<script type="text/javascript" src="js/.jquery-ui.js"></script>
+<script type="text/javascript" src="js/.sortable.js"></script>
+<script type="text/javascript" src="js/.treetable.js"></script>
+<script type="text/javascript" src="js/.colResizable.js"></script>
+<script type="text/javascript" src="js/.layout.js"></script>
+<script type="text/javascript">
+var layout, westLayout, centerLayout;
+$(document).ready(function () {
+  layout = $("body").layout({ 
+    resizable: true,
+    spacing_open: 4,
+    spacing_closed: 4,
+    north: {
+      size: 76
+    },
+    south: {
+      size: 45,
+      initClosed: true
+    }  });
+  $("#hierarchyTable tbody tr").mousedown(function() {
+    $("tr.selected").removeClass("selected");
+    $("td.selected").removeClass("selected");
+    $(this).addClass("selected");
+    $(this).children().addClass("selected");
+  });
+  $("tr[data-tt-id='hierarchyTable_root']").each(function () {
+    $(this).attr("style", "display:none");
+  });
+  $("tr[data-tt-parent-id='hierarchyTable_root']").each(function () {
+    $(this).attr("style", "display:table-row");
+    $("#hierarchyTable").treetable("expandNode", $(this).attr("data-tt-id"));
+  });
+  $("table").colResizable({    liveDrag:true,
+    fixed:false,
+    draggingClass:"dragging"
+  });
+});
+function expandAll() {
+  $("#hierarchyTable").treetable("expandAll");
+}
+function collapseAll() {
+  if ($("tr[data-tt-parent-id='hierarchyTable_root']").length > 0) {
+    $("tr[data-tt-parent-id='hierarchyTable_root']").each(function () {
+      var nodeId = $(this).attr("data-tt-id");
+      var node = $("#hierarchyTable").treetable("node", nodeId);
+      $("#hierarchyTable").treetable("collapseNodeRecursive", node);
+    });
+  } else {
+    $("#hierarchyTable").treetable("collapseAll");
+  }
+}
+</script>
+</head>
+<body><div class="ui-layout-north">
+<div class="logo"></div>
+<center class="pagetitle">Design Module List</center>
+<div align="center"><a href="dashboard.html" ><b>dashboard</b></a> | <a href="hierarchy.html" ><b>hierarchy</b></a> | <a href="modlist.html" ><b>modlist</b></a> | groups | <a href="tests.html" ><b>tests</b></a> | asserts</div>
+
+</div>
+<div class="ui-layout-center">
+<b>Total Module Definition Coverage Summary</b>&nbsp;<br clear=all>
+<table align=left>
+<tr class="sortablehead">
+<td nowrap width=65>SCORE</td><td nowrap width=65>LINE</td><td nowrap width=65>COND</td><td nowrap width=65>TOGGLE</td><td nowrap width=65>FSM</td></tr><tr>
+<td class="s7 cl rt"> 74.01</td>
+<td class="s6 cl rt"> 60.23</td>
+<td class="s8 cl rt"> 82.01</td>
+<td class="s7 cl rt"> 79.78</td>
+<td class="wht cl rt"></td>
+</tr></table><br clear=all>
+<br clear=all>
+Total modules in report: 21<hr>
+<table class="noborder">
+  <tr>
+    <td class="noborder"><input type="button" value="Expand All" onClick="expandAll()"></td>
+    <td class="noborder"><input type="button" value="Collapse All" onClick="collapseAll()"></td>
+  </tr>
+</table>
+<table id="hierarchyTable" border="0" cellpadding="0" cellspacing="0" class="sortable">
+  <thead class="table-header">
+    <tr>
+<th class="alfsrt">NAME</th><th>SCORE</th><th>LINE</th><th>COND</th><th>TOGGLE</th><th>FSM</th>    </tr>
+  </thead>
+  <tbody>
+    <tr data-tt-id="hierarchyTable_root">
+<td></td><td></td><td></td><td></td><td></td><td></td>    </tr>
+    <tr data-tt-id="mod_0" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XPM.xpm_memory_base "></a>
+<a href="mod0.html" >\XPM.xpm_memory_base </a></td>
+<td class="s3 cl rt"> 39.31</td>
+<td class="s3 cl rt"><a href="mod0.html#Line" > 37.88</a></td>
+<td class="s2 cl rt"><a href="mod0.html#Cond" > 28.57</a></td>
+<td class="s5 cl rt"><a href="mod0.html#Toggle" > 51.48</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_3" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.Sum4Bits "></a>
+<a href="mod3.html" >\XIL_DEFAULTLIB.Sum4Bits </a></td>
+<td class="s5 cl rt"> 52.78</td>
+<td class="wht cl rt"></td>
+<td class="wht cl rt"></td>
+<td class="s5 cl rt"><a href="mod3.html#Toggle" > 52.78</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_1" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XPM.xpm_fifo_sync "></a>
+<a href="mod1.html" >\XPM.xpm_fifo_sync </a></td>
+<td class="s5 cl rt"> 56.00</td>
+<td class="s5 cl rt"><a href="mod1.html#Line" > 55.56</a></td>
+<td class="wht cl rt"></td>
+<td class="s5 cl rt"><a href="mod1.html#Toggle" > 56.45</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_2" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.Padding5LineBuffer1b "></a>
+<a href="mod2.html" >\XIL_DEFAULTLIB.Padding5LineBuffer1b </a></td>
+<td class="s5 cl rt"> 56.45</td>
+<td class="wht cl rt"></td>
+<td class="wht cl rt"></td>
+<td class="s5 cl rt"><a href="mod2.html#Toggle" > 56.45</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_18" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_glbl"></a>
+<a href="mod18.html" >glbl</a></td>
+<td class="s5 cl rt"> 57.50</td>
+<td class="s10 cl rt"><a href="mod18.html#Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s1 cl rt"><a href="mod18.html#Toggle" > 15.00</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_15" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XPM.xpm_fifo_base "></a>
+<a href="mod15.html" >\XPM.xpm_fifo_base </a></td>
+<td class="s7 cl rt"> 70.32</td>
+<td class="s6 cl rt"><a href="mod15.html#Line" > 61.97</a></td>
+<td class="s8 cl rt"><a href="mod15.html#Cond" > 83.33</a></td>
+<td class="s6 cl rt"><a href="mod15.html#Toggle" > 65.66</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_9" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XPM.xpm_fifo_reg_bit "></a>
+<a href="mod9.html" >\XPM.xpm_fifo_reg_bit </a></td>
+<td class="s7 cl rt"> 70.83</td>
+<td class="s6 cl rt"><a href="mod9.html#Line" > 66.67</a></td>
+<td class="wht cl rt"></td>
+<td class="s7 cl rt"><a href="mod9.html#Toggle" > 75.00</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_6" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_TextureClassifierTop"></a>
+<a href="mod6.html" >TextureClassifierTop</a></td>
+<td class="s7 cl rt"> 72.07</td>
+<td class="s10 cl rt"><a href="mod6.html#Line" >100.00</a></td>
+<td class="s2 cl rt"><a href="mod6.html#Cond" > 20.00</a></td>
+<td class="s9 cl rt"><a href="mod6.html#Toggle" > 96.20</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_11" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.LinePaddingBuffer "></a>
+<a href="mod11.html" >\XIL_DEFAULTLIB.LinePaddingBuffer </a></td>
+<td class="s7 cl rt"> 79.84</td>
+<td class="s10 cl rt"><a href="mod11.html#Line" >100.00</a></td>
+<td class="s7 cl rt"><a href="mod11.html#Cond" > 73.33</a></td>
+<td class="s6 cl rt"><a href="mod11.html#Toggle" > 66.18</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_17" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.RotationInvariantUniform "></a>
+<a href="mod17.html" >\XIL_DEFAULTLIB.RotationInvariantUniform </a></td>
+<td class="s8 cl rt"> 84.80</td>
+<td class="s9 cl rt"><a href="mod17.html#Line" > 92.42</a></td>
+<td class="wht cl rt"></td>
+<td class="s7 cl rt"><a href="mod17.html#Toggle" > 77.17</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_13" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.AxisMasterRebuild "></a>
+<a href="mod13.html" >\XIL_DEFAULTLIB.AxisMasterRebuild </a></td>
+<td class="s8 cl rt"> 85.60</td>
+<td class="s9 cl rt"><a href="mod13.html#Line" > 93.33</a></td>
+<td class="s8 cl rt"><a href="mod13.html#Cond" > 88.89</a></td>
+<td class="s7 cl rt"><a href="mod13.html#Toggle" > 74.59</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_4" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.MappingControlUnit "></a>
+<a href="mod4.html" >\XIL_DEFAULTLIB.MappingControlUnit </a></td>
+<td class="s8 cl rt"> 85.95</td>
+<td class="s9 cl rt"><a href="mod4.html#Line" > 95.45</a></td>
+<td class="s8 cl rt"><a href="mod4.html#Cond" > 83.33</a></td>
+<td class="s7 cl rt"><a href="mod4.html#Toggle" > 79.05</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_12" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.PaddingControlUnit "></a>
+<a href="mod12.html" >\XIL_DEFAULTLIB.PaddingControlUnit </a></td>
+<td class="s8 cl rt"> 87.15</td>
+<td class="s9 cl rt"><a href="mod12.html#Line" > 94.44</a></td>
+<td class="s8 cl rt"><a href="mod12.html#Cond" > 86.21</a></td>
+<td class="s8 cl rt"><a href="mod12.html#Toggle" > 80.79</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_8" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XPM.xpm_fifo_rst "></a>
+<a href="mod8.html" >\XPM.xpm_fifo_rst </a></td>
+<td class="s9 cl rt"> 92.31</td>
+<td class="s10 cl rt"><a href="mod8.html#Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s8 cl rt"><a href="mod8.html#Toggle" > 84.62</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_19" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.LineCacheMappingUnit "></a>
+<a href="mod19.html" >\XIL_DEFAULTLIB.LineCacheMappingUnit </a></td>
+<td class="s9 cl rt"> 96.85</td>
+<td class="s10 cl rt"><a href="mod19.html#Line" >100.00</a></td>
+<td class="s9 cl rt"><a href="mod19.html#Cond" > 90.74</a></td>
+<td class="s9 cl rt"><a href="mod19.html#Toggle" > 99.82</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_10" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XPM.xpm_counter_updn "></a>
+<a href="mod10.html" >\XPM.xpm_counter_updn </a></td>
+<td class="s9 cl rt"> 97.49</td>
+<td class="s10 cl rt"><a href="mod10.html#Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s9 cl rt"><a href="mod10.html#Toggle" > 94.99</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="var_1" data-tt-parent-id="mod_10">
+<td class="wordwrap"><a name="tag_\XPM.xpm_counter_updn "></a>
+<a href="mod10.html#244517049" >\XPM.xpm_counter_updn </a></td>
+<td class="s10 cl rt">100.00</td>
+<td class="s10 cl rt"><a href="mod10.html#Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="wht cl rt"></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="var_2" data-tt-parent-id="mod_10">
+<td class="wordwrap"><a name="tag_\XPM.xpm_counter_updn  ( parameter COUNTER_WIDTH=7,RESET_VALUE ) "></a>
+<a href="mod10.html#1520354117" >\XPM.xpm_counter_updn  ( parameter COUNTER_WIDTH=7,RESET_VALUE ) </a></td>
+<td class="s9 cl rt"> 94.74</td>
+<td class="wht cl rt"></td>
+<td class="wht cl rt"></td>
+<td class="s9 cl rt"><a href="mod10.html#Toggle" > 94.74</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="var_3" data-tt-parent-id="mod_10">
+<td class="wordwrap"><a name="tag_\XPM.xpm_counter_updn  ( parameter COUNTER_WIDTH=8,RESET_VALUE=0 ) "></a>
+<a href="mod10.html#482360935" >\XPM.xpm_counter_updn  ( parameter COUNTER_WIDTH=8,RESET_VALUE=0 ) </a></td>
+<td class="s9 cl rt"> 95.24</td>
+<td class="wht cl rt"></td>
+<td class="wht cl rt"></td>
+<td class="s9 cl rt"><a href="mod10.html#Toggle" > 95.24</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_20" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.TextureClassifier "></a>
+<a href="mod20.html" >\XIL_DEFAULTLIB.TextureClassifier </a></td>
+<td class="s9 cl rt"> 99.72</td>
+<td class="s10 cl rt"><a href="mod20.html#Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s9 cl rt"><a href="mod20.html#Toggle" > 99.44</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_5" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.CheckFlip "></a>
+<a href="mod5.html" >\XIL_DEFAULTLIB.CheckFlip </a></td>
+<td class="s10 cl rt">100.00</td>
+<td class="s10 cl rt"><a href="mod5.html#Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s10 cl rt"><a href="mod5.html#Toggle" >100.00</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_7" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.PatchInterception "></a>
+<a href="mod7.html" >\XIL_DEFAULTLIB.PatchInterception </a></td>
+<td class="s10 cl rt">100.00</td>
+<td class="s10 cl rt"><a href="mod7.html#Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="s10 cl rt"><a href="mod7.html#Toggle" >100.00</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_14" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag_\XIL_DEFAULTLIB.GetAngle "></a>
+<a href="mod14.html" >\XIL_DEFAULTLIB.GetAngle </a></td>
+<td class="s10 cl rt">100.00</td>
+<td class="wht cl rt"></td>
+<td class="s10 cl rt"><a href="mod14.html#Cond" >100.00</a></td>
+<td class="s10 cl rt"><a href="mod14.html#Toggle" >100.00</a></td>
+<td class="wht cl rt"></td>
+    </tr>
+    <tr data-tt-id="mod_16" data-tt-parent-id="hierarchyTable_root">
+<td class="wordwrap"><a name="tag___simulation_def"></a>
+<a href="mod16.html" >__simulation_def</a></td>
+<td class="s10 cl rt">100.00</td>
+<td class="s10 cl rt"><a href="mod16.html#Line" >100.00</a></td>
+<td class="wht cl rt"></td>
+<td class="wht cl rt"></td>
+<td class="wht cl rt"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="ui-layout-south">
+<table align=center><tr><td class="s0 cl">0%</td>
+<td class="s1 cl">10%</td>
+<td class="s2 cl">20%</td>
+<td class="s3 cl">30%</td>
+<td class="s4 cl">40%</td>
+<td class="s5 cl">50%</td>
+<td class="s6 cl">60%</td>
+<td class="s7 cl">70%</td>
+<td class="s8 cl">80%</td>
+<td class="s9 cl">90%</td>
+<td class="s10 cl">100%</td></tr></table></div>
+
+<script>
+$("#hierarchyTable").treetable({ expandable: true });
+</script>
+</body>
+</html>
