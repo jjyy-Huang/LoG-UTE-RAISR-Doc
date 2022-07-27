@@ -1,0 +1,29 @@
+<session version="1.1" release="O-2018.09-SP2" timestp="2022-07-27 06:48:02 GMT">
+  <info>
+    <attr name="datetime" value="Wed Jul 27 14:48:15 2022
+"/>
+    <attr name="command" value="urg -full64 -dir ./AdaptedSharpener.vdb/"/>
+    <attr name="top_instance" value="AdaptedSharpener,__simulation_def,glbl"/>
+  </info>
+  <hvp>
+    <datadef>
+      <metdef name="Line" type="ratio" aggregator="average" builtin="1" />
+      <metdef name="Cond" type="ratio" aggregator="average" builtin="1" />
+      <metdef name="Toggle" type="ratio" aggregator="average" builtin="1" />
+      <metdef name="FSM" type="ratio" aggregator="average" builtin="1" />
+    </datadef>
+  </hvp>
+  <old_coverage>
+  <scope type="top" name="top">
+    <metric name="Line" value="2786/5966" />
+    <metric name="Cond" value="220/393" />
+    <metric name="Toggle" value="235235/449336" />
+  </scope>
+  <scope type="instance" name="top">
+  </scope>
+  <scope type="group" name="top">
+  </scope>
+  <scope type="assert" name="Statistics">
+  </scope>
+  </old_coverage>
+</session>
