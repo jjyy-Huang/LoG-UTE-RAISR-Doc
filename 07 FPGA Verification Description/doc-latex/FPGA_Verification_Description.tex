@@ -25,7 +25,7 @@
 \geometry{left=2.54cm,right=2.54cm,top=3.18cm,bottom=3.18cm}
 
 
-\title{{\Huge{\textbf{FPGA验证文档}}}\normalsize{\\——第六届全国大学生集成电路创新创业大赛景嘉微杯初赛提交文档}}
+\title{{\Huge{\textbf{FPGA验证文档}}}\normalsize{\\——第六届全国大学生集成电路创新创业大赛景嘉微杯分赛区决赛提交文档}}
 \author{队名：虹ヶ咲学园芯片设计同好会\\ 成员：黄金源\space邓立唯\space林明锋}
 \date{\today}
 \linespread{1.5}
@@ -42,9 +42,10 @@
 		\Huge\textbf{前言}
 	\end{center}~\
 	
-	本文档(FPGA验证文档)仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛初赛提交文档供评委评分使用。
+	本文档(FPGA验证文档)仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛分赛区决赛提交文档供评委评分使用。
 	~\\
 	\begin{flushright}
+		\includegraphics[width=0.25\linewidth]{pic/logo}\\
 		\begin{tabular}{c}
 			虹ヶ咲学园芯片设计同好会\\
 			\today
@@ -61,25 +62,37 @@
 	
 	%-----------------------正文----------------	
 	\chapter{概述}
-    在本项目中，需要进行 FPGA 板上验证的模块包括：Bicubic 上采样模块、纹理分类模块、自适应锐化模块。其中，已完成 FPGA 板上验证的有：Biubic 上采样模块；纹理分类模块与自适应锐化模块需要完成仿真验证后方可进行上板验证。
-    \par
-    关于 Bicubic 上采样模块具体验证方案可参考文档 \href{../../00 IP User Manual (All Specs)/APV21B_Bicubic_Super_Resolution_IP_UM.pdf}{APV21B-Bicubic Super Resolution IP User Manual} 第七章 Example Design。
+    在本项目中，需要进行 FPGA 板上验证的模块包括：Bicubic 上采样模块、纹理分类模块、自适应锐化模块。\\
+    
+    目前所有模块已完成 FPGA 板上验证。
 
     \chapter{验证方案}
     \section{验证平台介绍}
     本项目 FPGA 片上验证基于 米联客 MZU15A-15EG (Xilinx Zynq UltraScale+ MPSoC)完成。
     \section{验证框架介绍}
-    验证框架参考文档 \href{../../00 IP User Manual (All Specs)/APV21B_Bicubic_Super_Resolution_IP_UM.pdf}{APV21B-Bicubic Super Resolution IP User Manual} 第七章 概述。
+   		\begin{figure}
+   			\centering
+   			\includegraphics[scale=0.5]{pic/Architecture.png}
+   			\caption{FPGA 验证系统框架}
+   			\label{architecture}
+   		\end{figure}
+    验证框架参考文档 \href{../../00 IP User Manual (All Specs)/APV21B_Bicubic_Super_Resolution_IP_UM.pdf}{\textit{APV21B-Bicubic Super Resolution IP User Manual}} 第七章 概述或图 \ref{architecture} 所示。
     \section{验证流程介绍}
-    验证流程参考文档 \href{../../00 IP User Manual (All Specs)/APV21B_Bicubic_Super_Resolution_IP_UM.pdf}{APV21B-Bicubic Super Resolution IP User Manual} 第七章 设计工作流程。
+    验证流程参考文档 \href{../../00 IP User Manual (All Specs)/APV21B_Bicubic_Super_Resolution_IP_UM.pdf}{\textit{APV21B-Bicubic Super Resolution IP User Manual}} 第七章 设计工作流程。
     \begin{figure}[t]
         \centering
-        \includegraphics[scale=0.2]{pic/web.jpg}
-        \caption{上位机界面展示}
-        \label{web}
+        \includegraphics[scale=0.5]{pic/web0.png}
+        \caption{上位机界面展示1}
+        \label{web0}
     \end{figure}
+	\begin{figure}[t]
+	\centering
+	\includegraphics[scale=0.5]{pic/web1.png}
+	\caption{上位机界面展示2}
+	\label{web1}
+	\end{figure}
     \section{上位机介绍}
-    基于 Bootstrap 前端框架，使用 JavaScript 和 CSS 开发了网页端上位机，本地主机或服务器通过千兆以太网与 FPGA 开发板 PS 侧连接，可实现实时图像、视频数据、控制指令交互功能。页面如 \ref{web} 显示。
+    基于 Bootstrap 前端框架，使用 JavaScript 和 CSS 开发了网页端上位机，本地主机或服务器通过千兆以太网与 FPGA 开发板 PS 侧连接，可实现实时图像、视频数据、控制指令交互功能。页面如 \ref{web0} 、 \ref{web1} 所展示。
     
     \newpage
     \subsection{输入模式选择}
@@ -93,6 +106,11 @@
         \item 网页控制(一键)处理流程
         \item 自动将处理好的图片并打包成 ZIP 并保存
     \end{itemize}
+
+	\chapter{Demo 展示}
+	\href{file:./video/demo0.mp4}{\huge{\textit{Demo0}}}(自动从外部播放器打开) \\
+	
+	\href{file:./video/demo1.mp4}{\huge{\textit{Demo1}}}(自动从外部播放器打开) \\
 
     
 	
