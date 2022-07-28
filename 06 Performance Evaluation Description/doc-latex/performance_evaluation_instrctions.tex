@@ -25,7 +25,7 @@
 \geometry{left=2.54cm,right=2.54cm,top=3.18cm,bottom=3.18cm}
 
 
-\title{{\Huge{\textbf{性能评估文档}}}\normalsize{\\——第六届全国大学生集成电路创新创业大赛景嘉微杯初赛提交文档}}
+\title{{\Huge{\textbf{性能评估文档}}}\normalsize{\\——第六届全国大学生集成电路创新创业大赛景嘉微杯分赛区决赛提交文档}}
 \author{队名：虹ヶ咲学园芯片设计同好会\\ 成员：黄金源\space邓立唯\space林明锋}
 \date{\today}
 \linespread{1.5}
@@ -42,9 +42,10 @@
 		\Huge\textbf{前言}
 	\end{center}~\
 	
-	本文档(性能评估文档)仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛初赛提交文档供评委评分使用。
+	本文档(性能评估文档)仅作为虹ヶ咲学园芯片设计同好会（成员：黄金源、邓立唯、林明锋）参加第六届全国大学生集成电路创新创业大赛景嘉微杯赛分赛区决赛提交文档供评委评分使用。
 	~\\
 	\begin{flushright}
+		\includegraphics[width=0.25\linewidth]{pic/logo}\\
 		\begin{tabular}{c}
 			虹ヶ咲学园芯片设计同好会\\
 			\today
@@ -64,7 +65,7 @@
 	性能评估主要分为三大部分，针对于每个设计 IP 进行单独评估分析，其中包括 Bicubic 上采样模块性能评估、纹理分类模块性能评估以及自适应锐化模块性能评估。
 	
 	\chapter{Bicubic 上采样模块性能评估}
-	本章性能评估数据参考文档 \href{./ref/APV21B_Performance_Evaluation.pdf}{APB21B-Performance Evaluation}。
+	本章性能评估数据参考文档 \href{./ref/APV21B_Performance_Evaluation.pdf}{\textit{APB21B-Performance Evaluation}}。
 	\section{性能参数}
 	使用 Vivado 与 Synopsys Synplify Premier 进行时序分析。以输入 $960\times540$ 的图像数据为基准。
 		\subsection{最大频率}
@@ -130,11 +131,10 @@
 	其他器件的评估结果是使用 Verilog 自动推断完成的，可能由于每个器件的 DSP 模块的数据宽度不同而导致不同。实时视频 Bicubic 上采样 IP 已为 Xilinx UltraScale+ 系列器件的 DSP48E2 模块特别优化。为了最大限度地利用资源，建议使用这些器件进行合成。
 	
 	\chapter{纹理分类模块性能评估}
-	由于该模块处于整合阶段，故未进行详细性能评估。
 	\section{性能参数}
 	使用 Vivado 进行时序分析。
 		\subsection{最大频率}
-		未进行评估。
+		本模块与自适应锐化模块搭配使用，不单独进行最大频率估计。
 		\subsection{最大延迟}
 		仅用于评估该IP的路径时延，不考虑受系统延迟或其他限制。假设图像输入宽为 $W$ 位像素。
 		\begin{table}[h]
@@ -142,18 +142,18 @@
 			\begin{tabular}{|c|c|}
 				\hline
 				\textbf{描述}       & \textbf{时钟周期}   \\ \hline
-				高斯滤波运算从输入到输出      & 9               \\ \hline
+				高斯滤波运算从输入到输出      & 8               \\ \hline
 				拉普拉斯滤波运算从输入到输出    & 4               \\ \hline
-				纹理检测器运算从输入到输出     & 1               \\ \hline
-				第一个像素进入到第一个像素输出   & $8\cdot W+14$   \\ \hline
-				最后一个像素进入到最后一个像素输出 & $8\cdot W + 14$ \\ \hline
+				纹理检测器运算从输入到输出     & 2               \\ \hline
+				第一个像素进入到第一个像素输出   & $8\cdot W+17$   \\ \hline
+				最后一个像素进入到最后一个像素输出 & $8\cdot W + 17$ \\ \hline
 			\end{tabular}
 		\caption{最大延迟}
 		\end{table}
 		\subsection{吞吐量}
-		未进行评估。
+		与 Bicubic 上采样模块吞吐量评估结果一致。
 	\section{资源使用量}
-	未进行评估。
+	本模块与自适应锐化模块搭配使用，不单独进行资源使用量估计。
 	
 	
 	\chapter{自适应锐化模块性能评估}
@@ -180,10 +180,10 @@
 			\centering
 			\begin{tabular}{|c|c|}
 				\hline
-				\textbf{描述}       & \textbf{时钟周期}  \\ \hline
-				锐化卷积运算从输入到输出      & 10                            \\ \hline
-				第一个像素进入到第一个像素输出   & $3\cdot W+10$                 \\ \hline
-				最后一个像素进入到最后一个像素输出 & $3\cdot W + 10$            \\ \hline
+				\textbf{描述}       			& \textbf{时钟周期}  			\\ \hline
+				锐化卷积运算从输入到输出      	& 8                            \\ \hline
+				第一个像素进入到第一个像素输出   & $3\cdot W+12$                \\ \hline
+				最后一个像素进入到最后一个像素输出 & $3\cdot W + 12$            \\ \hline
 			\end{tabular}
 		\caption{最大延迟}
 		\end{table}
@@ -200,7 +200,7 @@
 			\hline
 			\multirow{2}{*}{\textbf{Device}} & \multicolumn{2}{c|}{\textbf{Configuration Parameter}}               & \multicolumn{5}{c|}{\textbf{resource utilization}}                                                                                                               \\ \cline{2-8} 
 			& \multicolumn{1}{c|}{\textbf{Input resolution}} & \textbf{fclk(MHz)} & \multicolumn{1}{c|}{\textbf{LUTs}} & \multicolumn{1}{c|}{\textbf{FFs}} & \multicolumn{1}{c|}{\textbf{DSPs}} & \multicolumn{1}{c|}{\textbf{BRAM}} & \textbf{URAM} \\ \hline
-			XCZU15EG                         & \multicolumn{1}{c|}{960 × 540}                 & 300                & \multicolumn{1}{c|}{228}           & \multicolumn{1}{c|}{1633}         & \multicolumn{1}{c|}{148}           & \multicolumn{1}{c|}{5}             & 10            \\ \hline
+			XCZU15EG                         & \multicolumn{1}{c|}{960 × 540}                 & 300                & \multicolumn{1}{c|}{4608}           & \multicolumn{1}{c|}{479}         & \multicolumn{1}{c|}{348}           & \multicolumn{1}{c|}{37.5}             & 21            \\ \hline
 		\end{tabular}
 	\caption{资源使用量}
 	\end{table}
