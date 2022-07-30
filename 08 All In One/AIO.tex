@@ -1126,14 +1126,14 @@ void DestoryImageMat(ImageMat* mat);
 	\subsection{Bicubic 上采样模块}
 	详细验证覆盖率结果可参考 \textbf{\nameref{appendix_a}}。
 	\subsection{纹理分类模块}
-	详细验证覆盖率结果可查看 \href{file:./coverage_report/textureclassifier/dashboard.html}{\textit{纹理分类模块覆盖率报告}}。
+	详细验证覆盖率结果可查看 \textbf{\nameref{appendix_b}}。
 	\subsection{自适应锐化模块}
-	详细验证覆盖率结果可查看 \href{file:./coverage_report/adaptedSharpener/dashboard.html}{\textit{自适应锐化模块覆盖率报告}}。
+	详细验证覆盖率结果可查看 \textbf{\nameref{appendix_c}}。
 	\subsection{色域转换模块}
 	\subsubsection{RGB2YUV Unit}
-	详细验证覆盖率结果可查看 \href{file:./coverage_report/rgb2yuv/dashboard.html}{\textit{RGB2YUV Unit Coverage Report}}。
+	详细验证覆盖率结果可查看 \textbf{\nameref{appendix_d}}。
 	\subsubsection{YUV2RGB Unit}
-	详细验证覆盖率结果可查看 \href{file:./coverage_report/yuv2rgb/dashboard.html}{\textit{YUV2RGB Unit Coverage Report}}。
+	详细验证覆盖率结果可查看 \textbf{\nameref{appendix_e}}。
 	
 	\section{验证分析}
 	\subsection{各子运算单元}
@@ -1370,7 +1370,23 @@ er			\multirow{2}{*}{\textbf{Device}} & \multicolumn{2}{c|}{\textbf{Configuratio
 
 	\chapter*{附录 A} \label{appendix_a}
 	\addcontentsline{toc}{chapter}{附录 A}
-	%\includepdf[pages=-]{./ref/APV21B_Bicubic_Super_Resolution_IP_UM.pdf}
+	\includepdf[page=-]{./ref/APV21B_Bicubic_Super_Resolution_IP_UM.pdf}
+	
+	\chapter*{附录 B} \label{appendix_b}
+	\addcontentsline{toc}{chapter}{附录 B}
+	\includepdf{./coverage_report/textureclassifier.pdf}
+	
+	\chapter*{附录 C} \label{appendix_c}
+	\addcontentsline{toc}{chapter}{附录 C}
+	\includepdf{./coverage_report/adaptedSharpener.pdf}
+	
+	\chapter*{附录 D} \label{appendix_d}
+	\addcontentsline{toc}{chapter}{附录 D}
+	\includepdf{./coverage_report/rgb2yuv.pdf}
+	
+	\chapter*{附录 E} \label{appendix_e}
+	\addcontentsline{toc}{chapter}{附录 E}
+	\includepdf{./coverage_report/yuv2rgb.pdf}
 	
 	
 \end{document}
