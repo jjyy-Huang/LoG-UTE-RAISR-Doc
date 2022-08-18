@@ -160,6 +160,17 @@
 	\end{equation}
 	先利用高斯平滑滤波进行处理，可以降低图片中的高频噪声，方便后续的拉普拉斯操作。
 	
+	\section{高斯差分算子介绍}
+		\subsection{概述}
+		高斯差分算子 (DoG, Difference of Gaussian)\textsuperscript{\cite{14}\cite{15}}通过计算两个不同方差的高斯核作用于平滑同一图像的差异。从另外一个角度可以理解为，DoG 是一个可保留特定空间频率的带通滤波器，利用一个低模糊的图像与一个高模糊的图像相减完成。DoG 通过模糊处理去除掉图像中的高频噪声成分，并利用差分操作去除两图像中重叠的低频成分。通常情况下，DoG 可用于图像锐化、质量增强。
+		\subsection{原理}
+		记图片像素的强度值为 $I(x,y)$，二维的高斯平滑卷积核可参考公式 \ref{gauss}，$\rho$ 作为控制图像增强比例，$\alpha$ 为高模糊高斯核的方差倍数, $G_{\sigma}(x,y)$ 表示低模糊度的高斯卷积核，$G_{\alpha\sigma}(x,y)$ 表示高模糊度的高斯卷积核算子，$D_{\sigma,\alpha,\rho}$ 表示高斯差分算子。此时可导出高斯差分函数如式 \ref{DoG} 所示。
+		\begin{equation} \label{DoG}
+			D_{\sigma,\alpha,\rho}(x,y)=(1+\rho)G_{\sigma}(x,y)-\rho G_{\alpha\sigma}(x,y)
+		\end{equation}
+		
+		实际上，控制缩放因子 $\rho$ 大小，可以从在增强边缘的同时更好的保留的图像的结构特征。同时，通过级联不同方差的高斯差分算子，可以有效提取出图像中的高频、中高频、中低频信息，用于增强图像本身，提升图像质量。
+	
 	\section{局部二值模式介绍}
 		\subsection{概述}
 		局部二值模式 (LBP, Local Binary Pattern)\textsuperscript{\cite{8}}\textsuperscript{\cite{9}}\textsuperscript{\cite{13}} 是一种用来描述图像局部纹理特征的算子；
@@ -384,6 +395,8 @@ V=A^Tb=\sum_{i=1}^LA_i^Tb_i
 		\bibitem{11}H. Hou and H. Andrews, "Cubic splines for image interpolation and digital filtering," IEEE Trans. on Acoustics, Speech and Signal Proc., vol. 26, no. 6, pp. 508–517, 1978. 1
 		\bibitem{12}Marr D, Hildreth E. Theroy of edge detection. Proc. of the Royal Society of London. Series B. Biological Sciences, 1980,207(1167): 187-217.
 		\bibitem{13}Ojala, T., Pietikäinen, M. and Harwood, D. (1996), A Comparative Study of Texture Measures with Classification Based on Feature Distributions. Pattern Recognition 19(3):51-59.
+		\bibitem{14}D. Marr and E. Hildreth, “Theory of edge detection,” Proceedings of the Royal Society of London B: Biological Sciences, vol. 207, no. 1167, pp. 187–217, 1980. 2		
+		\bibitem{15}H. Winnemoller, J. E. Kyprianidis, and S. C. Olsen, “XDoG: An extended difference-of-Gaussians compendium including advanced image stylization,” Computers & Graphics, vol. 36, no. 6, pp. 740–753, 2012. 2, 8
 	\end{thebibliography}
 	
 	
